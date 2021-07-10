@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0 -p ${PORT:-8080}",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "export": "npm run build && next export -o _static"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
