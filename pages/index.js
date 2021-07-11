@@ -32,14 +32,14 @@ function RandomData() {
     if (!data) return <p>No Data!</p>
 
     return data.orders.map((data)=> (
-        <div>
+        <div key={data.id}>
             <h3>{data.customer.name}</h3>
             <p>{data.customer.phone}</p>
             <p>{data.customer.address.line1}</p>
             <p>{data.customer.address.city}</p>
             <p>{data.customer.address.postal}</p>
             <p>{data.meals.map((mealData) => (
-                <h1>{mealData.protein}</h1>
+                <h1 key={mealData.id}>{mealData.protein}</h1>
             ))}</p>
         </div>
     ));
