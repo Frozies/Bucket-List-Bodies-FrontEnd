@@ -9,7 +9,7 @@ import {
 //This is kind of a dumb way to use env, but we're just going to do it anyways...
 let apolloURI;
 if (process.env.NODE_ENV === "development") {
-    apolloURI = 'http:/localhost:4001/'
+    apolloURI = 'http://localhost:4001/'
 };
 
 if (process.env.NODE_ENV === "production") {

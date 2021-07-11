@@ -8,6 +8,13 @@ const randData = gql`
             id
             customer {
                 name
+                address {
+                    city
+                    line1
+                    line2
+                    postal
+                    state
+                }
             }
             meals {
                 protein
@@ -17,15 +24,27 @@ const randData = gql`
         }
     }
 `
+
 function RandomData() {
     const {loading, error, data} = useQuery(randData);
     if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
-    if (data) return <p>Hello!</p>
-    // return data.orders.map((customer, status) => {
-    //
-    // })
-}
+    if (error) return <p>Error :({console.log(error)}</p> ;
+    if (!data) return <p>No Data!</p>
+
+    return data.orders.map((data)=> (
+        <div>
+            <h3>{data.customer.name}</h3>
+            <p>{data.customer.phone}</p>
+            <p>{data.customer.address.line1}</p>
+            <p>{data.customer.address.city}</p>
+            <p>{data.customer.address.postal}</p>
+            <p>{data.meals.map((mealData) => (
+                <h1>{mealData.protein}</h1>
+            ))}</p>
+        </div>
+    ));
+
+};
 
 export default function Home() {
   return (
@@ -40,7 +59,9 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to Bucket List Bodies
         </h1>
-          <RandomData />
+          <h2>
+              <RandomData />
+          </h2>
       </main>
     </div>
   )
