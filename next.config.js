@@ -27,9 +27,9 @@ module.exports = {
     return {
       '/': { page: '/' },
     }
-  },
+  }/*,
   images: {
     loader: "imgix",
-    path: "https://noop/",
-  },
+    path: "/",
+  },*/
 }
