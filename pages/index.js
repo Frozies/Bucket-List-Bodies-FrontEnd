@@ -1,50 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import {gql, useQuery} from "@apollo/client";
-
-const randData = gql`
-    query Query {
-        orders {
-            id
-            customer {
-                name
-                address {
-                    city
-                    line1
-                    line2
-                    postal
-                    state
-                }
-            }
-            meals {
-                protein
-                status
-            }
-            status
-        }
-    }
-`
-
-function RandomData() {
-    const {loading, error, data} = useQuery(randData);
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :({console.log(error)}</p> ;
-    if (!data) return <p>No Data!</p>
-
-    return data.orders.map((data)=> (
-        <div key={data.id}>
-            <h3>{data.customer.name}</h3>
-            <p>{data.customer.phone}</p>
-            <p>{data.customer.address.line1}</p>
-            <p>{data.customer.address.city}</p>
-            <p>{data.customer.address.postal}</p>
-            <p>{data.meals.map((mealData) => (
-                <h1 key={mealData.id}>{mealData.protein}</h1>
-            ))}</p>
-        </div>
-    ));
-
-};
+import RandomData from "../components/SingleOrder";
 
 export default function Home() {
   return (
