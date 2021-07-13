@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import RandomData from "../components/SingleOrder";
+import CustomerContactInfo from "../components/SingleOrder";
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
           Welcome to Bucket List Bodies
         </h1>
           <h2>
-              <RandomData />
+              <CustomerContactInfo customerId={1}/>
           </h2>
       </main>
     </div>
