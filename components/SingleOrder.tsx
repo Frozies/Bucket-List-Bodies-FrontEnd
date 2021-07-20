@@ -1,6 +1,10 @@
 import {gql, useQuery} from "@apollo/client";
+import {Box, Container, Grid, Paper, TextField} from "@material-ui/core";
+import {makeStyles} from "@material-ui/styles";
+import {spacing} from "@material-ui/system";
 
-const randData = gql`
+//Commented out temporarily input new commands here.
+/*const randData = gql`
     query Query {
         orders {
             id
@@ -22,7 +26,7 @@ const randData = gql`
         }
     }
 `
-//TODO: Fill in this query :D
+// Fill in this query :D
 const customerContactQuery = gql`
     query Query($customerId: ID) {
         customer(id: $customerId) {
@@ -38,12 +42,42 @@ const customerContactQuery = gql`
         }
     }
 
-`
+`*/
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: 3,
+        marginRight: 3,
+    },
+    cardStyle: {
+        border: '0',
+        marginBottom: '30px',
+        marginTop: '30px',
+        borderRadius: '6px',
+        color: 'rgba(0, 0, 0, 0.87)',
+        background: '#ec0000',
+        width: '100%',
+        boxShadow: '0 1px 4px 0 rgba(0, 0, 0, 0.14)',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        minWidth: '0',
+        wordWrap: 'break-word',
+        fontSize: '.875rem',
+    }
+}));
 
 //*This class will retrieve the current customer's contact information using their ID.
 // */
 function CustomerContactInfo(customerId: Number) {
-    const {loading, error, data} = useQuery(customerContactQuery, {
+    const classes = useStyles();
+    //write a new function here
+    /*const {loading, error, data} = useQuery(customerContactQuery, {
         variables: {
             customerId
         }
@@ -51,12 +85,73 @@ function CustomerContactInfo(customerId: Number) {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :({console.log(error)}</p> ;
     if (!data) return <p>No Data!</p>
-    if(data) console.log(data)
+    if(data) console.log(data)*/
 
-    //TODO: Fill in some temporary loading boxes
     return (
         <div>
-            Hello
+            <Box className={classes.cardStyle}>
+                <h3>Address</h3>
+                <TextField
+                    margin={"normal"}
+                    id={"line1"}
+                    label={"Address Line 1"}
+                    variant={"outlined"}
+                    fullWidth={true}
+                    className={classes.textField}
+                />
+
+                <TextField
+                    margin={"normal"}
+                    id={"line2"}
+                    label={"Address Line 2"}
+                    variant={"outlined"}
+                    fullWidth={true}
+                    className={classes.textField}
+                />
+
+                <TextField
+                    margin={"normal"}
+                    id={"zip"}
+                    label={"Postal Code"}
+                    variant={"outlined"}
+                    className={classes.textField}
+                />
+
+                <TextField
+                    margin={"normal"}
+                    id={"city"}
+                    label={"City"}
+                    variant={"outlined"}
+                    className={classes.textField}
+                />
+
+                <h3>Personal</h3>
+
+                <TextField
+                    margin={"normal"}
+                    id={"email"}
+                    label={"Email"}
+                    variant={"outlined"}
+                    className={classes.textField}
+                />
+
+
+                <TextField
+                    margin={"normal"}
+                    id={"Name"}
+                    label={"Name"}
+                    variant={"outlined"}
+                    className={classes.textField}
+                />
+
+                <TextField
+                    margin={"normal"}
+                    id={"phone"}
+                    label={"Phone"}
+                    variant={"outlined"}
+                    className={classes.textField}
+                />
+            </Box>
         </div>
     )
 

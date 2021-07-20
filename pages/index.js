@@ -12,9 +12,6 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to Bucket List Bodies
-        </h1>
           <h2>
               <CustomerContactInfo customerId={1}/>
           </h2>
