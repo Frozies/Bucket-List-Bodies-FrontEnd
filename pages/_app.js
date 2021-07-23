@@ -1,10 +1,12 @@
 import '../styles/globals.css'
+import theme from '../src/theme'
 
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
+import {MuiThemeProvider} from "@material-ui/core";
 
 //This is kind of a dumb way to use env, but we're just going to do it anyways...
 let apolloURI;
@@ -24,7 +26,9 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }) {
   return (
       <ApolloProvider client={client}>
-        <Component {...pageProps} />
+        <MuiThemeProvider theme={theme}>
+            <Component {...pageProps} />
+        </MuiThemeProvider>
       </ApolloProvider>
   )
 }

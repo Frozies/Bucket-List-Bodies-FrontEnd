@@ -1,6 +1,16 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import CustomerContactInfo from "../components/SingleOrder";
+import AddressInput from "../components/AddressInput";
+import OrderInput from "../components/OrderInput";
+
+/*todo:
+            -   Header
+            -   Mobile Styling
+            -   Multi page routing
+            -   Footer
+            -   Header and Footer app bars
+            -   What are the other pages.
+            */
 
 export default function Home() {
   return (
@@ -11,11 +21,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+        <header style={}
+
       <main className={styles.main}>
-          <h2>
-              <CustomerContactInfo customerId={1}/>
-          </h2>
+                <AddressInput/>
+          <OrderInput/>
       </main>
+        <footer className={styles.footer}>
+            Hello World!
+        </footer>
     </div>
   )
 }
