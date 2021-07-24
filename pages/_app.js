@@ -11,6 +11,7 @@ import TopAppBar from "../components/TopAppBar";
 import * as ReactDOMServer from "react-dom/server";
 import {HelmetProvider} from "react-helmet-async";
 
+
 //This is kind of a dumb way to use env, but we're just going to do it anyways...
 let apolloURI;
 if (process.env.NODE_ENV === "development") {

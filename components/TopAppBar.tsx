@@ -1,6 +1,8 @@
 import {MDCTopAppBar} from '@material/top-app-bar';
 
 import React from 'react';
+import {Button} from "@material-ui/core";
+import {SystemsStatus} from "./SystemsStatus";
 function TopAppBar(props: { pageTitle: String }) {
 
     // // Instantiation
@@ -19,15 +21,10 @@ function TopAppBar(props: { pageTitle: String }) {
                         <span className="mdc-top-app-bar__title">{props.pageTitle}</span>
                     </section>
                     <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                        <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                                aria-label="Favorite">favorite
-                        </button>
-                        <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button"
-                                aria-label="Search">search
-                        </button>
-                        <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button"
+                        {SystemsStatus('OKAY')} {/*TODO: Fill in props*/}
+                        {/*<button className="material-icons mdc-top-app-bar__action-item mdc-icon-button"
                                 aria-label="Options">more_vert
-                        </button>
+                        </button>*/}
                     </section>
                 </div>
             </header>
