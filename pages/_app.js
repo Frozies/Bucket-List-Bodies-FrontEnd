@@ -8,8 +8,8 @@ import {
 } from "@apollo/client";
 import {MuiThemeProvider} from "@material-ui/core";
 import TopAppBar from "../components/TopAppBar";
-import {Helmet} from "react-helmet";
 import * as ReactDOMServer from "react-dom/server";
+import {HelmetProvider} from "react-helmet-async";
 
 //This is kind of a dumb way to use env, but we're just going to do it anyways...
 let apolloURI;
@@ -30,9 +30,11 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }) {
   return (
       <ApolloProvider client={client}>
-        <MuiThemeProvider theme={theme}>
-            <Component {...pageProps} />
-        </MuiThemeProvider>
+          <HelmetProvider>
+              <MuiThemeProvider theme={theme}>
+                  <Component {...pageProps} />
+              </MuiThemeProvider>
+          </HelmetProvider>
       </ApolloProvider>
   )
 }

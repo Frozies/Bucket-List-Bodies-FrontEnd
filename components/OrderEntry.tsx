@@ -1,10 +1,11 @@
 import React, {useEffect, useState, Component} from 'react'
 import styles from '../styles/Home.module.css'
 import {Helmet} from "react-helmet";
-import AddressInput from "../components/AddressInput";
-import OrderInput from "../components/OrderInput";
+import AddressInput from "./AddressInput";
+import OrderInput from "./OrderInput";
+import {Grid} from "@material-ui/core";
 
-class AdminHome extends Component <any, any>{
+class OrderEntry extends Component <any, any>{
 
     constructor(props: any) {
         super(props);
@@ -46,21 +47,17 @@ class AdminHome extends Component <any, any>{
         }
 
         return (
-            <div className={styles.container}>
-                <Helmet>
-                    <title>Bucket List Bodies</title>
-                    <meta name="description" content="Bucket list bodies is a good place to get food from!" />
-                    <link rel="icon" href="/favicon.ico" />
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-                </Helmet>
+            <Grid className={styles.container}>
+
 
 
                 <main className={styles.main}>
-                    {getComponent()}
+                    {/*{getComponent()}*/} // getComponent will load upo the order input stuff
+
                 </main>
-            </div>
+            </Grid>
         )
     }
 }
 
-export default AdminHome;
+export default OrderEntry;

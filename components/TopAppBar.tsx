@@ -1,7 +1,6 @@
 import {MDCTopAppBar} from '@material/top-app-bar';
 
 import React from 'react';
-
 function TopAppBar(props: { pageTitle: String }) {
 
     // // Instantiation
@@ -11,6 +10,7 @@ function TopAppBar(props: { pageTitle: String }) {
     return (
         <div>
             <header className="mdc-top-app-bar">
+                <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
                 <div className="mdc-top-app-bar__row">
                     <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                         <button className="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
