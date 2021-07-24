@@ -127,6 +127,10 @@ function AddressInput(props: any) {
                         fullWidth={true}
                         variant={"contained"}
                         color={'secondary'}
+                        onClick={() => {
+                            console.log("Address Clicked")
+                            props.onSubmit()
+                        }}
                     > Submit </Button>
                     {/*todo: forward and back buttons on either side of the  modal*/}
                 </div>

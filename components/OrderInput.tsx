@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function OrderInput(props: any) {
+function OrderInput(props: {onSubmit: any}) {
     const classes = useStyles();
 
     //Phone Number Values
@@ -56,8 +56,8 @@ function OrderInput(props: any) {
                     <form>
                         <FormControl>
                             <FormLabel>Radio Group</FormLabel>
-                            <Radio>Test</Radio>
-                            <Radio>Test 2</Radio>
+                            {/*<Radio>Test</Radio>
+                            <Radio>Test 2</Radio>*/}
 
                         </FormControl>
                     </form>
@@ -89,6 +89,9 @@ function OrderInput(props: any) {
                         fullWidth={true}
                         variant={"contained"}
                         color={'secondary'}
+                        onClick={() => {
+                            props.onSubmit()
+                        }}
                     > Submit </Button>
                     {/*todo: forward and back buttons on either side of the  modal*/}
                 </div>

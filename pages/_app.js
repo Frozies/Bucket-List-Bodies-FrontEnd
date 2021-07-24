@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import theme from '../src/theme'
 
 import {
@@ -7,6 +7,9 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import {MuiThemeProvider} from "@material-ui/core";
+import TopAppBar from "../components/TopAppBar";
+import {Helmet} from "react-helmet";
+import * as ReactDOMServer from "react-dom/server";
 
 //This is kind of a dumb way to use env, but we're just going to do it anyways...
 let apolloURI;
@@ -22,6 +25,7 @@ const client = new ApolloClient({
     uri: apolloURI,
     cache: new InMemoryCache()
 });
+
 
 function MyApp({ Component, pageProps }) {
   return (

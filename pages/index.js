@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import AddressInput from "../components/AddressInput";
-import OrderInput from "../components/OrderInput";
+import TopAppBar from "../components/TopAppBar";
+import AdminHome from "./AdminHome";
+import {useState} from "react";
+
 
 /*todo:
             -   Header
@@ -13,23 +13,14 @@ import OrderInput from "../components/OrderInput";
             */
 
 export default function Home() {
+    const [title, setTitle] = useState("Bucket List Bodies");
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Bucket List Bodies</title>
-        <meta name="description" content="Bucket list bodies is a good place to get food from!" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-        <header style={}
-
-      <main className={styles.main}>
-                <AddressInput/>
-          <OrderInput/>
-      </main>
-        <footer className={styles.footer}>
+    <div>
+        <TopAppBar pageTitle={title} />
+        <AdminHome/>
+        {/*<footer className={styles.footer}>
             Hello World!
-        </footer>
+        </footer>*/}
     </div>
   )
 }
