@@ -23,16 +23,10 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function mobileBreakpoint(code: string) {
-    const matches = useMediaQuery(theme.breakpoints.up('sm'));
-    if (matches) {
-        return (SystemsStatus(code))
-    }
-}
 
 function TopAppBar(props: { pageTitle: String }) {
     const [systemState, setSystemState] = useState('UNKNOWN');
-
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
     let handleSystemState = () => {
         setSystemState('OKAY')
@@ -48,6 +42,12 @@ function TopAppBar(props: { pageTitle: String }) {
         // The console.log seems to output the default UNKNOWN state first, then the OKAY state. I need to learn effect
         handleSystemState()
     })
+
+    function mobileBreakpoint(code: string) {
+        if (matches) {
+            return (SystemsStatus(code))
+        }
+    }
 
     const classes = useStyles();
 
