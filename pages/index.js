@@ -1,7 +1,7 @@
-import TopAppBar from "../components/TopAppBar";
-import OrderEntry from "../components/OrderEntry";
+import TopAppBar from "../components/Admin/TopAppBar";
+import OrderEntry from "../components/Admin/OrderEntry";
 import React, {useState} from "react";
-import AdminHome from "../components/AdminHome";
+import AdminHome from "../components/Admin/AdminHome";
 import {Helmet, HelmetProvider} from "react-helmet-async";
 import {makeStyles} from "@material-ui/styles";
 import styles from '../styles/Home.module.css'
@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
+        flexGrow: 1,
     },
     textField: {
         background: 'white',
@@ -28,14 +29,28 @@ const useStyles = makeStyles((theme) => ({
         margin: '0 5px 5px 0',
     },
     cardStyle: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexGrow: 1,
         background: 'white',
         border: 0,
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px #42a5f4',
         color: 'black',
-        height: '100%',
-        width: '100%',
         padding: '30px 30px',
+    },
+    infoCard: {
+        background: '#42a5f4',
+        border: 0,
+        borderRadius: 3,
+        // boxShadow: '0 3px 5px 2px #808080',
+        color: 'white',
+        height: 140,
+        width: 140,
+        margin: '1rem 2.5rem 5rem 2.5rem',
+        padding: '1rem 1rem 1rem 1rem',
+        display: 'flex',
+        flexWrap: 'wrap',
     }
 }));
 
@@ -56,7 +71,6 @@ export default function Home() {
 
         <main className={styles.container}>
             <div className={styles.main}>
-                <AdminHome classes={classes}/>
             </div>
         </main>
 

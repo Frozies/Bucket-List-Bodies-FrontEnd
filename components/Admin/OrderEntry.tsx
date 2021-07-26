@@ -1,5 +1,5 @@
 import React, {useEffect, useState, Component} from 'react'
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 import {Helmet} from "react-helmet";
 import AddressInput from "./AddressInput";
 import OrderInput from "./OrderInput";
@@ -32,7 +32,7 @@ class OrderEntry extends Component <any, any>{
                     return <AddressInput onSubmit={()=> {
                         this.updateState('personal')
                         getComponent()
-                        console.log("Click on Admin")
+                        console.log("Click on Index")
                     }}/>
                 case 'personal':
                     console.log("Order Rendered")

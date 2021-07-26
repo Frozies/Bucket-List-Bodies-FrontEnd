@@ -21,6 +21,15 @@ export const SystemsStatus = (code: string) => {
                 </Button>
             )
         }
+        case 'ERROR': {
+            return (
+                <Button variant={"contained"} style={{
+                    background: "#f44336" //todo: Pallet Error
+                }}>
+                    ERROR
+                </Button>
+            )
+        }
         default: {
             return (
                 <Button variant={"contained"} style={{
