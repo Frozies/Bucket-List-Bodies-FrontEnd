@@ -26,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 3,
         boxShadow: '0 3px 5px 2px #42a5f4',
         color: 'black',
-        padding: '30px 30px',
+        // padding: '30px 30px',
+        width: 'auto',
+        height: "auto"
     },
     infoCard: {
         background: '#42a5f4',
