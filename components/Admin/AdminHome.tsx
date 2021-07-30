@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Paper} from "@material-ui/core";
-import XGridDemo from "./XGridDemo";
-
+import {Button, Grid, Paper} from "@material-ui/core";
 
 const orderInfo = (colors: string, amount: number, text: string, className: string) => {
     return(
@@ -32,7 +30,14 @@ class AdminHome extends Component <IProps> {
                             {orderInfo("Red", 5, "Deliveries", this.classes.infoCard)}
                             {orderInfo("Red", 5, "Unconfirmed", this.classes.infoCard)}
                         </Grid>
-                        <XGridDemo/>
+
+                        <Paper elevation={2}>
+                            <Button>
+                                <a href={"/admin/createProduct"}>
+                                    Create Product
+                                </a>
+                            </Button>
+                        </Paper>
                     </Grid>
                 </Grid>
             </Paper>

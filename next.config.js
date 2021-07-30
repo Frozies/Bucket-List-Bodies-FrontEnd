@@ -27,6 +27,7 @@ module.exports = {
     return {
       '/': { page: '/' },
       '/admin': { page: '/admin' },
+      '/admin/createproduct': { page: '/admin/CreateProduct' },
     }
   }/*,
   images: {

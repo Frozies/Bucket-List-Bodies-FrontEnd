@@ -8,7 +8,6 @@ import styles from '../styles/Home.module.css'
             -   Mobile Styling -- css hell
             -   Multi page routing -- express?
             -   Footer -- app bar?
-            -   What are the other pages.
             */
 
 export default function Home() {
