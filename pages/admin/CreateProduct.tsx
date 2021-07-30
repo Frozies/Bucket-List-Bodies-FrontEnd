@@ -1,8 +1,21 @@
 import React, {Component} from 'react';
-import {Button, Paper} from "@material-ui/core";
+import {
+    Box,
+    Button,
+    Chip, Container,
+    FormControl,
+    FormLabel, Grid,
+    InputAdornment, MenuItem,
+    OutlinedInput,
+    Paper,
+    Select,
+    TextField
+} from "@material-ui/core";
 import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/TopAppBar";
 import styles from "../../styles/Home.module.css";
+import {TextFields} from "@material-ui/icons";
+import AllergiesSelector from "../../components/Admin/AllergiesSelector";
 
 {/*
                     Photo Upload - File
@@ -21,6 +34,7 @@ interface IProps {
 }
 
 class CreateProduct extends Component <IProps> {
+
     private classes: any;
     constructor(props: IProps) {
         super(props);
@@ -43,21 +57,106 @@ class CreateProduct extends Component <IProps> {
                 <main className={styles.container}>
                     <div className={styles.main}>
                         <Paper elevation={1}>
-                            <div>
-                                <input
-                                    accept="image/*"
-                                    // className={classes.input}
-                                    style={{ display: 'none' }}
-                                    id="raised-button-file"
-                                    multiple
-                                    type="file"
-                                />
-                                <label htmlFor="raised-button-file">
-                                    <Button component="span"> {/* className={classes.button} variant="raised"*/}
-                                        Upload
-                                    </Button>
-                                </label>
-                            </div>
+                            <Container>
+                                <div>
+                                    <input
+                                        accept="image/*"
+                                        // className={classes.input}
+                                        style={{ display: 'none' }}
+                                        id="raised-button-file"
+                                        multiple
+                                        type="file"
+                                    />
+                                    <label htmlFor="raised-button-file">
+                                        <Button component="span"> {/* className={classes.button} variant="raised"*/}
+                                            Upload Meal Photo
+                                        </Button>
+                                    </label>
+                                </div>
+
+                                <Grid>
+                                    <FormControl>
+                                        <FormLabel> Title </FormLabel>
+                                        <OutlinedInput
+                                            id={"title"}
+                                            name={'Title'}
+                                            placeholder={'Blackened Chicken'}
+                                            fullWidth={true}
+                                        />
+                                    </FormControl>
+
+                                    <br/>
+
+                                    <FormControl>
+                                        <FormLabel>Sides</FormLabel>
+                                        <OutlinedInput
+                                            id={"sides"}
+                                            name={'sides'}
+                                            placeholder={'with green beans'}
+                                            fullWidth={true}
+                                        />
+                                    </FormControl>
+
+                                    <br/>
+
+                                    <FormControl>
+                                        <FormLabel>Description</FormLabel>
+                                        <OutlinedInput
+                                            id={"sides"}
+                                            name={'sides'}
+                                            placeholder={'A Gourmet chicken that is healthy and yummy!'}
+                                            fullWidth={true}
+                                        />
+                                    </FormControl>
+
+                                    <br/>
+
+                                </Grid>
+
+                                <FormControl>
+                                    <FormLabel>Amount</FormLabel>
+                                    <OutlinedInput
+                                        id={'amount'}
+                                        name={'amount'}
+                                        placeholder={'9.99'}
+                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                    />
+                                </FormControl>
+
+                                <br/>
+
+                                <FormControl>
+                                    <FormLabel>Carbs</FormLabel>
+                                    <OutlinedInput
+                                        id={'carbs'}
+                                        name={'carbs'}
+                                        placeholder={'500'}
+                                        startAdornment={<InputAdornment position="start">carbs</InputAdornment>}
+                                    />
+                                </FormControl>
+
+                                <br/>
+
+                                <FormControl>
+                                    <FormLabel>Calories</FormLabel>
+                                    <OutlinedInput
+                                        id={'cals'}
+                                        name={'cals'}
+                                        placeholder={'500'}
+                                        startAdornment={<InputAdornment position="start">cals</InputAdornment>}
+                                    />
+                                </FormControl>
+
+                                <br/>
+
+                                <AllergiesSelector/>
+
+                                <br/>
+
+                                <Button>
+                                    Submit
+                                </Button>
+                            </Container>
                         </Paper>
                     </div>
                 </main>
