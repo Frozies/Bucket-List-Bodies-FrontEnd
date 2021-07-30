@@ -7,8 +7,6 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import {MuiThemeProvider} from "@material-ui/core";
-import TopAppBar from "../components/Admin/TopAppBar";
-import * as ReactDOMServer from "react-dom/server";
 import {HelmetProvider} from "react-helmet-async";
 
 
