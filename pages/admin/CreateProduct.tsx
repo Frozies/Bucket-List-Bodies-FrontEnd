@@ -1,44 +1,81 @@
 import React, {Component} from 'react';
 import {
-    Box,
     Button,
-    Chip, Container,
+    Container,
     FormControl,
     FormLabel, Grid,
-    InputAdornment, MenuItem,
+    InputAdornment,
     OutlinedInput,
     Paper,
-    Select,
-    TextField
 } from "@material-ui/core";
 import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/TopAppBar";
 import styles from "../../styles/Home.module.css";
-import {TextFields} from "@material-ui/icons";
 import AllergiesSelector from "../../components/Admin/AllergiesSelector";
-
-{/*
-                    Photo Upload - File
-                    Description - Text
-                    Gluten Free - Check
-                    Calories - Text
-                    Carbs - Text
-                    Meal title - Text
-                    Sides - Text
-                    Price - Text
-                    Special Price - Check
-                 */}
+import { gql, useMutation } from '@apollo/client';
 
 interface IProps {
     classes: any
 }
 
-class CreateProduct extends Component <IProps> {
+interface Meal {
+    title: String,
+}
 
+const CREATE_MEAL = gql`
+    #Creates a new product and price in stripe and send the information to mongodb database.
+    mutation Mutation($createMealMeal: MealInput) {
+        createMeal(meal: $createMealMeal)
+    }
+`;
+
+function CreateMeal(meal: {
+    title: any;
+}) {
+    const [createMeal, { data, loading, error }] = useMutation(CREATE_MEAL);
+
+    if (loading) return 'Submitting...';
+    if (error) return `Submission error! ${error.message}`;
+
+    return (
+        <div>
+            {/*<form
+                onSubmit={e => {
+                    e.preventDefault();
+                    addTodo({ variables: { text: input.value } });
+                    input.value = '';
+                }}
+            >*/}
+
+
+            <FormControl
+            onSubmit={ e => {
+                e.preventDefault();
+                /*createMeal({
+                    variables: {
+                        title: meal.title,
+                     }
+                });*/
+                console.log(meal.title)
+            }}
+            >
+                <Button type="submit">
+                    Submit
+                </Button>
+            </FormControl>
+        </div>
+    );
+}
+
+class CreateProduct extends Component <IProps> {
     private classes: any;
+
     constructor(props: IProps) {
         super(props);
         this.classes = props.classes
+        this.state = {
+            title: String,
+        }
     }
 
     private pageTitle = "Create New Product"
@@ -153,9 +190,9 @@ class CreateProduct extends Component <IProps> {
 
                                 <br/>
 
-                                <Button>
-                                    Submit
-                                </Button>
+                                {CreateMeal((state: any, props: any) => {
+                                    title: state.title
+                                })}
                             </Container>
                         </Paper>
                     </div>
