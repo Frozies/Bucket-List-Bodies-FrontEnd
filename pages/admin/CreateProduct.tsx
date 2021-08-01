@@ -18,7 +18,7 @@ interface IProps {
     classes: any
 }
 
-interface Meal {
+interface IMeal {
     title: String,
 }
 
@@ -29,9 +29,7 @@ const CREATE_MEAL = gql`
     }
 `;
 
-function CreateMeal(meal: {
-    title: any;
-}) {
+function CreateMeal(meal: IMeal) {
     const [createMeal, { data, loading, error }] = useMutation(CREATE_MEAL);
 
     if (loading) return 'Submitting...';
@@ -67,14 +65,14 @@ function CreateMeal(meal: {
     );
 }
 
-class CreateProduct extends Component <IProps> {
+class CreateProduct extends Component <IProps, IMeal> {
     private classes: any;
 
     constructor(props: IProps) {
         super(props);
         this.classes = props.classes
         this.state = {
-            title: String,
+            title: "Hello World!"
         }
     }
 
@@ -190,8 +188,8 @@ class CreateProduct extends Component <IProps> {
 
                                 <br/>
 
-                                {CreateMeal((state: any, props: any) => {
-                                    title: state.title
+                                {CreateMeal({
+                                    title: this.state.title
                                 })}
                             </Container>
                         </Paper>
