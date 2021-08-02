@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
     Button,
     Container,
@@ -12,14 +12,23 @@ import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/TopAppBar";
 import styles from "../../styles/Home.module.css";
 import AllergiesSelector from "../../components/Admin/AllergiesSelector";
-import { gql, useMutation } from '@apollo/client';
+import {gql, useMutation} from '@apollo/client';
+import {SubmitHandler, useForm} from "react-hook-form";
 
-interface IProps {
-    classes: any
+interface IMealInput {
+    title: String,
+    sides: String,
+    description: String,
+    amount: String,
+    carbs: String,
+    calories: String,
+    // allergies: AllergyEnum
 }
 
-interface IMeal {
-    title: String,
+enum AllergyEnum {
+    fish = "fish",
+    nuts = "nuts",
+    other = "other"
 }
 
 const CREATE_MEAL = gql`
@@ -28,32 +37,29 @@ const CREATE_MEAL = gql`
         createMeal(meal: $createMealMeal)
     }
 `;
-
+/*
 function CreateMeal(meal: IMeal) {
-    const [createMeal, { data, loading, error }] = useMutation(CREATE_MEAL);
 
-    if (loading) return 'Submitting...';
-    if (error) return `Submission error! ${error.message}`;
 
     return (
         <div>
-            {/*<form
+            {/!*<form
                 onSubmit={e => {
                     e.preventDefault();
                     addTodo({ variables: { text: input.value } });
                     input.value = '';
                 }}
-            >*/}
+            >*!/}
 
 
             <FormControl
             onSubmit={ e => {
                 e.preventDefault();
-                /*createMeal({
+                /!*createMeal({
                     variables: {
                         title: meal.title,
                      }
-                });*/
+                });*!/
                 console.log(meal.title)
             }}
             >
@@ -63,145 +69,120 @@ function CreateMeal(meal: IMeal) {
             </FormControl>
         </div>
     );
-}
+}*/
 
-class CreateProduct extends Component <IProps, IMeal> {
-    private classes: any;
 
-    constructor(props: IProps) {
-        super(props);
-        this.classes = props.classes
-        this.state = {
-            title: "Hello World!"
-        }
+function CreateProduct() {
+    const { register, handleSubmit } = useForm<IMealInput>();
+
+    const [createMeal, { data, loading, error }] = useMutation<IMealInput>(CREATE_MEAL);
+
+    if (loading) console.log("Loading");
+    if (error) console.log(`Submission error! ${error.message}`);
+
+    const onSubmit: SubmitHandler<IMealInput> = (formData:IMealInput) => {
+        console.log(formData)
+
+        createMeal({
+            variables: {
+                createMealMeal: {
+                    title: formData.title,
+                    sides: formData.sides,
+                    description: formData.description,
+                    price: formData.amount,
+                    carbs: formData.carbs,
+                    calories: formData.calories,
+                }
+            }
+        });
     }
 
-    private pageTitle = "Create New Product"
+    const pageTitle = "Create new meal"
 
-    render() {
-        return (
-            <div>
-                <Helmet>
-                    <title>{this.pageTitle}</title>
-                    <meta name="description" content="Bucket list bodies is a good place to get food from!" />
-                    <link rel="icon" href="/favicon.ico" />
-                </Helmet>
+    return (
+        <div>
+            <Helmet>
+                <title>{pageTitle}</title>
+                <meta name="description" content="Bucket list bodies is a good place to get food from!" />
+                <link rel="icon" href="/favicon.ico" />
+            </Helmet>
 
-                <TopAppBar pageTitle={this.pageTitle} />
+            <TopAppBar pageTitle={pageTitle} />
 
-                <main className={styles.container}>
-                    <div className={styles.main}>
-                        <Paper elevation={1}>
-                            <Container>
-                                <div>
-                                    <input
-                                        accept="image/*"
-                                        // className={classes.input}
-                                        style={{ display: 'none' }}
-                                        id="raised-button-file"
-                                        multiple
-                                        type="file"
-                                    />
-                                    <label htmlFor="raised-button-file">
-                                        <Button component="span"> {/* className={classes.button} variant="raised"*/}
-                                            Upload Meal Photo
-                                        </Button>
-                                    </label>
-                                </div>
+            <main className={styles.container}>
+                <div className={styles.main}>
+                    <Paper elevation={1}>
+                        <Container>
+                            <div>
+                                <input
+                                    accept="image/*"
+                                    // className={classes.input}
+                                    style={{ display: 'none' }}
+                                    id="raised-button-file"
+                                    multiple
+                                    type="file"
+                                />
+                                <label htmlFor="raised-button-file">
+                                    <Button component="span"> {/* className={classes.button} variant="raised"*/}
+                                        Upload Meal Photo
+                                    </Button>
+                                </label>
+                            </div>
 
-                                <Grid>
-                                    <FormControl>
-                                        <FormLabel> Title </FormLabel>
-                                        <OutlinedInput
-                                            id={"title"}
-                                            name={'Title'}
-                                            placeholder={'Blackened Chicken'}
-                                            fullWidth={true}
-                                        />
-                                    </FormControl>
+                            <Grid>
 
+                                <form onSubmit={handleSubmit(onSubmit)}>
+                                    <label>Meal Photo</label>
+                                    <input {...register} type="file" name="picture" />
                                     <br/>
 
-                                    <FormControl>
-                                        <FormLabel>Sides</FormLabel>
-                                        <OutlinedInput
-                                            id={"sides"}
-                                            name={'sides'}
-                                            placeholder={'with green beans'}
-                                            fullWidth={true}
-                                        />
-                                    </FormControl>
-
+                                    <label>Title</label>
+                                    <input {...register("title")} defaultValue={"Blackend Chicken"}/>
                                     <br/>
 
-                                    <FormControl>
-                                        <FormLabel>Description</FormLabel>
-                                        <OutlinedInput
-                                            id={"sides"}
-                                            name={'sides'}
-                                            placeholder={'A Gourmet chicken that is healthy and yummy!'}
-                                            fullWidth={true}
-                                        />
-                                    </FormControl>
-
+                                    <label>Sides</label>
+                                    <input {...register("sides")} defaultValue={"Green Beans"}/>
                                     <br/>
 
-                                </Grid>
+                                    <label>Description</label>
+                                    <input {...register("description")} />
+                                    <br/>
 
-                                <FormControl>
-                                    <FormLabel>Amount</FormLabel>
-                                    <OutlinedInput
-                                        id={'amount'}
-                                        name={'amount'}
-                                        placeholder={'9.99'}
-                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                    />
-                                </FormControl>
+                                    <label>Amount</label>
+                                    <input {...register("amount")} />
+                                    <br/>
 
-                                <br/>
+                                    <label>Carbs</label>
+                                    <input {...register("carbs")} />
+                                    <br/>
 
-                                <FormControl>
-                                    <FormLabel>Carbs</FormLabel>
-                                    <OutlinedInput
-                                        id={'carbs'}
-                                        name={'carbs'}
-                                        placeholder={'500'}
-                                        startAdornment={<InputAdornment position="start">carbs</InputAdornment>}
-                                    />
-                                </FormControl>
+                                    <label>Calories</label>
+                                    <input {...register("calories")} />
+                                    <br/>
 
-                                <br/>
 
-                                <FormControl>
-                                    <FormLabel>Calories</FormLabel>
-                                    <OutlinedInput
-                                        id={'cals'}
-                                        name={'cals'}
-                                        placeholder={'500'}
-                                        startAdornment={<InputAdornment position="start">cals</InputAdornment>}
-                                    />
-                                </FormControl>
 
-                                <br/>
+                                    {/*<label>Allergies Selection</label>
+                                    <select {...register("allergies")} >
+                                        <option value="fish">fish</option>
+                                        <option value="nuts">nuts</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                    <br/>*/}
 
-                                <AllergiesSelector/>
+                                    <input type="submit" />
+                                </form>
+                            </Grid>
+                        </Container>
+                    </Paper>
+                </div>
+            </main>
 
-                                <br/>
-
-                                {CreateMeal({
-                                    title: this.state.title
-                                })}
-                            </Container>
-                        </Paper>
-                    </div>
-                </main>
-
-                {/*<footer className={styles.footer}>
+            {/*<footer className={styles.footer}>
             // Hello World!
         </footer>*/}
-            </div>
-        );
-    }
+        </div>
+    )
 }
 
 export default CreateProduct;

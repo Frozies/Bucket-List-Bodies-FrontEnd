@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === "production") {
 };
 
 const client = new ApolloClient({
-    uri: apolloURI,
+    uri: 'http://localhost:4001/',
     cache: new InMemoryCache()
 });
 
