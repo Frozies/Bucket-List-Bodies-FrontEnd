@@ -37,40 +37,6 @@ const CREATE_MEAL = gql`
         createMeal(meal: $createMealMeal)
     }
 `;
-/*
-function CreateMeal(meal: IMeal) {
-
-
-    return (
-        <div>
-            {/!*<form
-                onSubmit={e => {
-                    e.preventDefault();
-                    addTodo({ variables: { text: input.value } });
-                    input.value = '';
-                }}
-            >*!/}
-
-
-            <FormControl
-            onSubmit={ e => {
-                e.preventDefault();
-                /!*createMeal({
-                    variables: {
-                        title: meal.title,
-                     }
-                });*!/
-                console.log(meal.title)
-            }}
-            >
-                <Button type="submit">
-                    Submit
-                </Button>
-            </FormControl>
-        </div>
-    );
-}*/
-
 
 function CreateProduct() {
     const { register, handleSubmit } = useForm<IMealInput>();
