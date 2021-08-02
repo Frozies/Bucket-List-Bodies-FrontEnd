@@ -52,7 +52,6 @@ class OrderEntry extends Component <any, any>{
 
 
                 <main className={styles.main}>
-                    {/*{getComponent()}*/} // getComponent will load upo the order input stuff
 
                 </main>
             </Grid>
