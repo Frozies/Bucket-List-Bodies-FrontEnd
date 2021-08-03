@@ -8,6 +8,7 @@ import {
 } from "@apollo/client";
 import {MuiThemeProvider} from "@material-ui/core";
 import {HelmetProvider} from "react-helmet-async";
+import {createUploadLink} from "apollo-upload-client";
 
 
 //This is kind of a dumb way to use env, but we're just going to do it anyways...
@@ -22,7 +23,11 @@ if (process.env.NODE_ENV === "production") {
 
 const client = new ApolloClient({
     uri: apolloURI,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
+    //@ts-ignore
+    link: createUploadLink({
+        uri: 'http://localhost:4001/graphql',
+    }),
 });
 
 

@@ -14,6 +14,7 @@ import styles from "../../styles/Home.module.css";
 import AllergiesSelector from "../../components/Admin/AllergiesSelector";
 import {gql, useMutation} from '@apollo/client';
 import {SubmitHandler, useForm} from "react-hook-form";
+import {UploadFile} from "../../components/Admin/UploadFile";
 
 interface IMealInput {
     title: String,
@@ -95,7 +96,9 @@ function CreateProduct() {
                                 </label>
                             </div>*/}
 
-                            <Grid>
+                            <UploadFile/>
+
+                            {/*<Grid>
 
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <label>Meal Photo</label>
@@ -128,17 +131,17 @@ function CreateProduct() {
 
 
 
-                                    {/*<label>Allergies Selection</label>
+                                    <label>Allergies Selection</label>
                                     <select {...register("allergies")} >
                                         <option value="fish">fish</option>
                                         <option value="nuts">nuts</option>
                                         <option value="other">other</option>
                                     </select>
-                                    <br/>*/}
+                                    <br/>
 
                                     <Input type="submit" />
                                 </form>
-                            </Grid>
+                            </Grid>*/}
                         </Container>
                     </Paper>
                 </div>
