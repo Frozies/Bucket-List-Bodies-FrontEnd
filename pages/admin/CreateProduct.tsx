@@ -3,7 +3,7 @@ import {
     Button,
     Container,
     FormControl,
-    FormLabel, Grid,
+    FormLabel, Grid, Input,
     InputAdornment,
     OutlinedInput,
     Paper,
@@ -79,7 +79,7 @@ function CreateProduct() {
                 <div className={styles.main}>
                     <Paper elevation={1}>
                         <Container>
-                            <div>
+                            {/*<div>
                                 <input
                                     accept="image/*"
                                     // className={classes.input}
@@ -89,41 +89,41 @@ function CreateProduct() {
                                     type="file"
                                 />
                                 <label htmlFor="raised-button-file">
-                                    <Button component="span"> {/* className={classes.button} variant="raised"*/}
+                                    <Button component="span">  className={classes.button} variant="raised"
                                         Upload Meal Photo
                                     </Button>
                                 </label>
-                            </div>
+                            </div>*/}
 
                             <Grid>
 
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <label>Meal Photo</label>
-                                    <input {...register} type="file" name="picture" />
+                                    <Input {...register} type="file" name="picture" />
                                     <br/>
 
                                     <label>Title</label>
-                                    <input {...register("title")} defaultValue={"Blackend Chicken"}/>
+                                    <Input {...register("title")} defaultValue={"Blackend Chicken"}/>
                                     <br/>
 
                                     <label>Sides</label>
-                                    <input {...register("sides")} defaultValue={"Green Beans"}/>
+                                    <Input {...register("sides")} defaultValue={"Green Beans"}/>
                                     <br/>
 
                                     <label>Description</label>
-                                    <input {...register("description")} />
+                                    <Input {...register("description")} />
                                     <br/>
 
                                     <label>Amount</label>
-                                    <input {...register("amount")} />
+                                    <Input {...register("amount")}  />
                                     <br/>
 
                                     <label>Carbs</label>
-                                    <input {...register("carbs")} />
+                                    <Input {...register("carbs")} />
                                     <br/>
 
                                     <label>Calories</label>
-                                    <input {...register("calories")} />
+                                    <Input {...register("calories")} />
                                     <br/>
 
 
@@ -136,7 +136,7 @@ function CreateProduct() {
                                     </select>
                                     <br/>*/}
 
-                                    <input type="submit" />
+                                    <Input type="submit" />
                                 </form>
                             </Grid>
                         </Container>
