@@ -5,6 +5,7 @@ import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/TopAppBar";
 import styles from "../../styles/Home.module.css";
 import AdminHome from "../../components/Admin/AdminHome";
+import Image from 'next/image'
 
 const RETRIEVE_ALL_MEALS = gql`
     query Query {
@@ -52,10 +53,7 @@ function Products() {
                                 }}>
                                     <Container>
                                         <p>{meal.title}</p>
-                                        <img style={{
-                                            width: "100px",
-                                            height: "100px"
-                                        }} src={meal.photoURL}/>
+                                        <Image width={"100px"} height={"100px"} src={meal.photoURL}/>
                                         <p>{meal.sides}</p>
                                         <p>{meal.description}</p>
                                         <p>${meal.price}</p>
