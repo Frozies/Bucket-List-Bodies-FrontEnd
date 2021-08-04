@@ -33,7 +33,7 @@ class AdminHome extends Component <IProps> {
 
                         <Paper elevation={2}>
                             <Button>
-                                <a href={"/admin/createProduct"}>
+                                <a href={"/admin/CreateProduct"}>
                                     Create Product
                                 </a>
                             </Button>
