@@ -38,6 +38,14 @@ class AdminHome extends Component <IProps> {
                                 </a>
                             </Button>
                         </Paper>
+
+                        <Paper elevation={2}>
+                            <Button>
+                                <a href={"/admin/products"}>
+                                    View Products
+                                </a>
+                            </Button>
+                        </Paper>
                     </Grid>
                 </Grid>
             </Paper>

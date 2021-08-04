@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function OrderInput(props: {onSubmit: any}) {
+function CreateMeal(props: {onSubmit: any}) {
     const classes = useStyles();
 
     //Phone Number Values
@@ -100,4 +100,4 @@ function OrderInput(props: {onSubmit: any}) {
     );
 }
 
-export default OrderInput;
+export default CreateMeal;
