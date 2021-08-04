@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
     Button,
     Container,
@@ -20,10 +20,11 @@ interface IMealInput {
     title: String,
     sides: String,
     description: String,
+    photoURL: String
     amount: String,
     carbs: String,
     calories: String,
-    // allergies: AllergyEnum
+    allergies: AllergyEnum
 }
 
 enum AllergyEnum {
@@ -39,29 +40,59 @@ const CREATE_MEAL = gql`
     }
 `;
 
+const SINGLE_UPLOAD = gql`
+    mutation($file: Upload!) {
+        singleUpload(file: $file) {
+            filename
+            mimetype
+            encoding
+            url
+        }
+    }
+`;
+
 function CreateProduct() {
     const { register, handleSubmit } = useForm<IMealInput>();
+    const [createMeal, { data: mealData, loading: mealLoading, error: mealError }] = useMutation<IMealInput>(CREATE_MEAL);
 
-    const [createMeal, { data, loading, error }] = useMutation<IMealInput>(CREATE_MEAL);
+    const [mutateUpload, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(SINGLE_UPLOAD);
+    const [file, setFile] = useState();
 
-    if (loading) console.log("Loading");
-    if (error) console.log(`Submission error! ${error.message}`);
+    if (mealLoading) console.log("Loading");
+    if (mealError) console.log(`Submission error! ${mealError.message}`);
+
+
+    const onChange = ({
+                          target: {
+                              validity,
+                              files: [file]
+                          }
+                      }: any) => {    // @ts-ignore
+        validity.valid && mutateUpload({ variables: { file } })
+    };
+
 
     const onSubmit: SubmitHandler<IMealInput> = (formData:IMealInput) => {
-        console.log(formData)
 
-        createMeal({
-            variables: {
-                createMealMeal: {
-                    title: formData.title,
-                    sides: formData.sides,
-                    description: formData.description,
-                    price: formData.amount,
-                    carbs: formData.carbs,
-                    calories: formData.calories,
+        try{
+            console.log("Creating Meal")
+            createMeal({
+                variables: {
+                    createMealMeal: {
+                        title: formData.title,
+                        sides: formData.sides,
+                        description: formData.description,
+                        photoURL: uploadData.singleUpload.url,
+                        price: formData.amount,
+                        carbs: formData.carbs,
+                        calories: formData.calories,
+                        allergies: formData.allergies
+                    }
                 }
-            }
-        });
+            });
+        } catch (e) {
+            return e;
+        }
     }
 
     const pageTitle = "Create new meal"
@@ -80,29 +111,11 @@ function CreateProduct() {
                 <div className={styles.main}>
                     <Paper elevation={1}>
                         <Container>
-                            {/*<div>
-                                <input
-                                    accept="image/*"
-                                    // className={classes.input}
-                                    style={{ display: 'none' }}
-                                    id="raised-button-file"
-                                    multiple
-                                    type="file"
-                                />
-                                <label htmlFor="raised-button-file">
-                                    <Button component="span">  className={classes.button} variant="raised"
-                                        Upload Meal Photo
-                                    </Button>
-                                </label>
-                            </div>*/}
-
-                            <UploadFile/>
-
-                            {/*<Grid>
+                            <Grid>
 
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <label>Meal Photo</label>
-                                    <Input {...register} type="file" name="picture" />
+                                    <Input {...register("photoURL")} type="file" name="picture" onChange={onChange}/>
                                     <br/>
 
                                     <label>Title</label>
@@ -129,8 +142,6 @@ function CreateProduct() {
                                     <Input {...register("calories")} />
                                     <br/>
 
-
-
                                     <label>Allergies Selection</label>
                                     <select {...register("allergies")} >
                                         <option value="fish">fish</option>
@@ -141,7 +152,7 @@ function CreateProduct() {
 
                                     <Input type="submit" />
                                 </form>
-                            </Grid>*/}
+                            </Grid>
                         </Container>
                     </Paper>
                 </div>

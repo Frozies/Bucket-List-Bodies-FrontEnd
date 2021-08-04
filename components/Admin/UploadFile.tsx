@@ -37,7 +37,7 @@ export const UploadFile = () => {
             {Object.keys(lastUploaded).length !== 0 && (
                 <div>
                     {" "}
-                    Last uploaded details ={">"} {JSON.stringify(lastUploaded, null, 2)}{" "}
+                    Last uploaded details ={">"}{" "}
                 </div>
             )}
         </div>
