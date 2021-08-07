@@ -33,7 +33,12 @@ module.exports = {
       '/admin': { page: '/admin' },
       '/admin/CreateProduct': { page: '/admin/CreateProduct' },
     }
-  }/*,
+  },
+  images: {
+    domains: ['bucket-list-bodies.s3.amazonaws.com']
+  }
+
+  /*,
   images: {
     loader: "imgix",
     path: "/",
