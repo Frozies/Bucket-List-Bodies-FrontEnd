@@ -3,6 +3,10 @@ const withImages = require('next-images')
 module.exports = {
   reactStrictMode: true,
 
+  env: {
+      APOLLO_URI: 'https://bucketlistbodies-fw9oq.ondigitalocean.app',
+  },
+
   webpack: (config, { webpack }) => {
     config.plugins.push(
         new webpack.IgnorePlugin({ resourceRegExp: /\/__test__\// })

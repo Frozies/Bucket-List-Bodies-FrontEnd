@@ -12,14 +12,21 @@ import {createUploadLink} from "apollo-upload-client";
 
 
 //This is kind of a dumb way to use env, but we're just going to do it anyways...
-const apolloURI = process.env.APOLLO_URI
+let apolloURI;
+if (process.env.NODE_ENV === "development") {
+    apolloURI = 'http://localhost:4001'
+};
+
+if (process.env.NODE_ENV === "production") {
+    apolloURI = 'https://bucketlistbodies-fw9oq.ondigitalocean.app'
+};
 
 const client = new ApolloClient({
     uri: apolloURI,
     cache: new InMemoryCache(),
     //@ts-ignore
     link: createUploadLink({
-        uri: apolloURI,
+        uri: apolloURI + '/graphql',
     }),
 });
 
