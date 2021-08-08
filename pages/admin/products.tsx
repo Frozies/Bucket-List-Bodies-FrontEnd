@@ -73,6 +73,7 @@ function Products() {
                         <Grid container spacing={10} style={{flexGrow: 1}}>
                             {mealData.retrieveAllMeals.map((meal: any) => (
                                 <Paper
+                                    key={meal.productID}
                                     style={{
                                     width: "250px",
                                     height: "350px",
