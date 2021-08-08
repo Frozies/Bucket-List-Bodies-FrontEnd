@@ -1,15 +1,17 @@
 import React from 'react';
-import {gql, useQuery} from "@apollo/client";
+import {gql, useMutation, useQuery} from "@apollo/client";
 import {Button, Container, Grid, Paper} from '@material-ui/core';
 import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/TopAppBar";
 import styles from "../../styles/Home.module.css";
 import AdminHome from "../../components/Admin/AdminHome";
 import Image from 'next/image'
+import Router from 'next/router'
 
 const RETRIEVE_ALL_MEALS = gql`
     query Query {
         retrieveAllMeals {
+            _id
             title
             description
             photoURL
@@ -22,13 +24,38 @@ const RETRIEVE_ALL_MEALS = gql`
     }
 `
 
-function Products() {
-    const {loading, error, data} = useQuery(RETRIEVE_ALL_MEALS);
+const DELETE_MEAL = gql`
+    mutation DeleteMealMutation($deleteMealMeal: MealInput) {
+        deleteMeal(meal: $deleteMealMeal)
+    }
+`
 
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error.message}`;
+function Products() {
+    const {loading: loadMeals, error: mealError, data: mealData} = useQuery(RETRIEVE_ALL_MEALS);
+    const [mutateDeleteMeal, {loading: loadingDeleteMeal, error: deleteError, data: deleteData}] = useMutation(DELETE_MEAL);
+
+    if (loadMeals) return 'Loading...';
+    if (mealError) return `Error! ${mealError.message}`;
     const pageTitle = "Products"
 
+    function deleteMeal(mealID: String) {
+        mutateDeleteMeal({
+            variables: {
+                deleteMealMeal: {
+                    _id: mealID
+                }
+            }
+        })
+
+        //Refresh the page
+        // @ts-ignore
+        Router.reload(window.location.pathname)
+    }
+
+    if (loadingDeleteMeal) return 'Loading Delete';
+    if (deleteError) return `Error Delete! ${deleteError.message}`;
+
+    // @ts-ignore
     return(
         <div>
             <Helmet>
@@ -44,8 +71,8 @@ function Products() {
 
                     <div>
                         <Grid container spacing={10} style={{flexGrow: 1}}>
-                            {data.retrieveAllMeals.map((meal: any) => (
-                                <Paper key={meal.key}
+                            {mealData.retrieveAllMeals.map((meal: any) => (
+                                <Paper
                                     style={{
                                     width: "250px",
                                     height: "350px",
@@ -57,7 +84,10 @@ function Products() {
                                         <p>{meal.sides}</p>
                                         <p>{meal.description}</p>
                                         <p>${meal.price}</p>
-                                        <Button>Edit</Button>
+                                        <Button onClick={() => {
+                                            console.log("ID: " + meal._id)
+                                            deleteMeal(meal._id)
+                                        }}>Delete</Button>
                                     </Container>
                                 </Paper>
                             ))}

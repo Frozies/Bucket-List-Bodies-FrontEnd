@@ -14,11 +14,11 @@ interface IMealInput {
     title: String,
     sides: String,
     description: String,
-    photoURL: String
-    amount: String,
+    photoURL: String,
+    price: String,
     carbs: String,
     calories: String,
-    allergies: AllergyEnum
+    allergies: AllergyEnum,
 }
 
 enum AllergyEnum {
@@ -35,13 +35,8 @@ const CREATE_MEAL = gql`
 `;
 
 const SINGLE_UPLOAD = gql`
-    mutation($file: Upload!) {
-        singleUpload(file: $file) {
-            filename
-            mimetype
-            encoding
-            url
-        }
+    mutation SingleFileUploadMutation($singleFileUploadFile: Upload!) {
+        singleFileUpload(file: $singleFileUploadFile)
     }
 `;
 
@@ -49,44 +44,75 @@ function CreateProduct() {
     const { register, handleSubmit } = useForm<IMealInput>();
     const [createMeal, { data: mealData, loading: mealLoading, error: mealError }] = useMutation<IMealInput>(CREATE_MEAL);
 
-    const [mutateUpload, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(SINGLE_UPLOAD);
+    const [url, setUrl] = useState();
+    const [mutateUpload, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(SINGLE_UPLOAD, {
+        onCompleted: data => {
+            try {
+                setUrl(data.singleFileUpload)
+                console.log(data.singleFileUpload)
+            }catch (e) {
+                console.log(e)
+            }
+        }
+    });
+
     const [file, setFile] = useState();
     const [success, setSuccess] = useState(false);
 
     if (mealLoading) console.log("Loading");
     if (mealError) console.log(`Submission error! ${mealError.message}`);
 
+    if (uploadLoading) console.log("Uploading file...")
+    if (uploadError) console.log(`Submission error! ${uploadError.message}`);
+
+    /*
+                  */
 
     const onChange = ({
                           target: {
                               validity,
                               files: [file]
                           }
-                      }: any) => {    // @ts-ignore
-        validity.valid && mutateUpload({ variables: { file } })
+                      }: any) => {
+
+        validity.valid;
+        setFile(file);
     };
 
 
-    const onSubmit: SubmitHandler<IMealInput> = (formData:IMealInput) => {
+    const onSubmit: SubmitHandler<IMealInput> = async (formData: IMealInput) => {
 
-        try{
-            console.log("Creating Meal")
-            createMeal({
+        try {
+            await mutateUpload({
                 variables: {
-                    createMealMeal: {
-                        title: formData.title,
-                        sides: formData.sides,
-                        description: formData.description,
-                        photoURL: uploadData.singleUpload.url,
-                        price: formData.amount,
-                        carbs: formData.carbs,
-                        calories: formData.calories,
-                        allergies: formData.allergies
-                    }
+                    singleFileUploadFile: file
                 }
-            }).then(r => {
-                setSuccess(true)
-            });
+            })
+        } catch (e) {
+            return e;
+        }
+
+        try {
+            if (url) {
+                await createMeal({
+                    variables: {
+                        createMealMeal: {
+                            title: formData.title,
+                            sides: formData.sides,
+                            description: formData.description,
+                            photoURL: url,
+                            price: formData.price,
+                            carbs: formData.carbs,
+                            calories: formData.calories,
+                            allergies: formData.allergies
+                        }
+                    }
+                }).then(r => {
+                    setSuccess(true)
+                });
+            } else {
+                throw "no Url"
+            }
         } catch (e) {
             return e;
         }
@@ -104,11 +130,11 @@ function CreateProduct() {
                     <br/>
 
                     <label>Title</label>
-                    <Input {...register("title")} defaultValue={"Blackend Chicken"}/>
+                    <Input {...register("title")}/>
                     <br/>
 
                     <label>Sides</label>
-                    <Input {...register("sides")} defaultValue={"Green Beans"}/>
+                    <Input {...register("sides")}/>
                     <br/>
 
                     <label>Description</label>
@@ -116,7 +142,7 @@ function CreateProduct() {
                     <br/>
 
                     <label>Amount</label>
-                    <Input {...register("amount")}  />
+                    <Input {...register("price")}  />
                     <br/>
 
                     <label>Carbs</label>

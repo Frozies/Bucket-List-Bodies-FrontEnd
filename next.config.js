@@ -35,12 +35,6 @@ module.exports = {
     }
   },
   images: {
-    domains: ['bucket-list-bodies.s3.amazonaws.com']
+    domains: ['res.cloudinary.com']
   }
-
-  /*,
-  images: {
-    loader: "imgix",
-    path: "/",
-  },*/
 }
