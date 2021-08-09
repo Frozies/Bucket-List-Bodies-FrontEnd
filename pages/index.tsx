@@ -1,4 +1,4 @@
-import TopAppBar from "../components/Admin/TopAppBar";
+import TopAppBar from "../components/Admin/Util/TopAppBar";
 import React from "react";
 import {Helmet} from "react-helmet-async";
 import styles from '../styles/Home.module.css'

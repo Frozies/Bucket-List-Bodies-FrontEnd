@@ -5,7 +5,7 @@ import {AppBar, Button, createStyles, IconButton, Theme, Toolbar, Typography, us
 import {SystemsStatus} from "./SystemsStatus";
 import {makeStyles} from "@material-ui/styles";
 import MenuIcon from '@material-ui/icons/Menu';
-import theme from "../../src/theme";
+import theme from "../../../src/theme";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

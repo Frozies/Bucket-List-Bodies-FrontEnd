@@ -2,7 +2,7 @@ import React from 'react';
 import {gql, useMutation, useQuery} from "@apollo/client";
 import {Button, Container, Grid, Paper} from '@material-ui/core';
 import {Helmet} from "react-helmet-async";
-import TopAppBar from "../../components/Admin/TopAppBar";
+import TopAppBar from "../../components/Admin/Util/TopAppBar";
 import styles from "../../styles/Home.module.css";
 import AdminHome from "../../components/Admin/AdminHome";
 import Image from 'next/image'

@@ -5,7 +5,7 @@ import {
     Paper,
 } from "@material-ui/core";
 import {Helmet} from "react-helmet-async";
-import TopAppBar from "../../components/Admin/TopAppBar";
+import TopAppBar from "../../components/Admin/Util/TopAppBar";
 import styles from "../../styles/Home.module.css";
 import {gql, useMutation} from '@apollo/client';
 import {SubmitHandler, useForm} from "react-hook-form";
@@ -40,7 +40,7 @@ const SINGLE_UPLOAD = gql`
     }
 `;
 
-function CreateProduct() {
+function createProduct() {
     const { register, handleSubmit } = useForm<IMealInput>();
     const [createMeal, { data: mealData, loading: mealLoading, error: mealError }] = useMutation<IMealInput>(CREATE_MEAL);
 
@@ -206,4 +206,4 @@ function CreateProduct() {
     )
 }
 
-export default CreateProduct;
+export default createProduct;
