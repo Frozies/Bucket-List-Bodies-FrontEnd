@@ -3,7 +3,7 @@ import MaskedInput from "react-text-mask";
 import React, {Component} from "react";
 import {render} from "react-dom";
 import {makeStyles} from "@material-ui/styles";
-import {Button, TextField} from "@material-ui/core";
+import {Button, Grid, TextField} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,6 +52,37 @@ function AddressInput(props: any) {
                     Enter in the address and contact information for a new order.
                 </p>
                 <div>
+                    <h3>Personal</h3>
+                    <form>
+
+                        <TextField
+                            id={"Name"}
+                            label={"Name"}
+                            variant={"outlined"}
+                            placeholder={"John Wick"}
+                            className={classes.textField}
+                        />
+                        <TextField
+                            id={"email"}
+                            label={"Email"}
+                            variant={"outlined"}
+                            placeholder={"JohnWick@hotmail.com"}
+                            className={classes.textField}
+                        />
+
+                        <TextField
+                            placeholder={values.textmask}
+                            onChange={handleChanges}
+                            label="Phone Number"
+                            id="phone"
+                            variant={"outlined"}
+                            className={classes.textField}
+                        />
+                    </form>
+
+                </div>
+
+                <div>
                     <h3>Address</h3>
                     <form>
                         <TextField
@@ -90,49 +121,35 @@ function AddressInput(props: any) {
                     </form>
 
                 </div>
-                <div>
 
-                    <br/>{/*todo: remove this break and replace it with css padding/margins */}
-                    <h3>Personal</h3>
-                    <form>
-                        <TextField
-                            id={"email"}
-                            label={"Email"}
-                            variant={"outlined"}
-                            placeholder={"JohnWick@hotmail.com"}
-                            className={classes.textField}
-                        />
+                <br/>
 
-
-                        <TextField
-                            id={"Name"}
-                            label={"Name"}
-                            variant={"outlined"}
-                            placeholder={"John Wick"}
-                            className={classes.textField}
-                        />
-
-                        <TextField
-                            placeholder={values.textmask}
-                            onChange={handleChanges}
-                            label="Phone Number"
-                            id="phone"
-                            variant={"outlined"}
-                            className={classes.textField}
-                        />
-                    </form>
-
-                    <br/>
+                <div
+                    style={{
+                        display: "flex"
+                    }}
+                >
                     <Button
-                        fullWidth={true}
+                        style={{
+                            margin: "auto",
+                            width: "25%"
+                        }}
+                        variant={"contained"}
+                        color={'default'}
+                    > <a href={'/admin'}>Previous</a> </Button>
+                    <Button
+                        style={{
+                            margin: "auto",
+                            width: "25%"
+                        }}
                         variant={"contained"}
                         color={'secondary'}
                         onClick={() => {
-                            console.log("Address Clicked")
-                            props.onSubmit()
+                            // props.onSubmit()
+                            console.log("Next")
+                            props.onNext();
                         }}
-                    > Submit </Button>
-                    {/*todo: forward and back buttons on either side of the  modal*/}
+                    > Next </Button>
                 </div>
             </div>
         </div>

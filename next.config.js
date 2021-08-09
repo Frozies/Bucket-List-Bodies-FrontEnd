@@ -31,7 +31,8 @@ module.exports = {
     return {
       '/': { page: '/' },
       '/admin': { page: '/admin' },
-      '/admin/CreateProduct': { page: '/admin/CreateProduct' },
+      '/admin/createProduct': { page: '/admin/createProduct' },
+      '/admin/createOrder': { page: '/admin/createOrder' },
     }
   },
   images: {
