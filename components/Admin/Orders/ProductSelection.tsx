@@ -4,34 +4,37 @@ import {Button, Container, Grid, Paper} from '@material-ui/core';
 import Image from 'next/image'
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
 
-const RETRIEVE_ALL_MEALS = gql`
-    query Query {
-        retrieveAllMeals {
-            _id
-            title
-            description
-            photoURL
-            price
-            sides
-            carbs
-            calories
-            allergies
-        }
-    }
-`
-
 export default function ProductSelection(props: any) {
-    const {loading: loadMeals, error: mealError, data: mealData} = useQuery(RETRIEVE_ALL_MEALS);
-
-    if (loadMeals) return 'Loading...';
-    if (mealError) return `Error! ${mealError.message}`;
-
-    // @ts-ignore
-    const [meals, setMeals] = useState([]);
+    const mealData = props.mealData
+    const [meals, setMeals] = useState(props.selectedMeals);
 
     // @ts-ignore
     const handleSelection = (event: any, newSelection: React.SetStateAction) => {
         setMeals(newSelection);
+    }
+
+    const mealsList = () => {
+        return (
+            <ToggleButtonGroup onChange={handleSelection} value={meals}>
+                {mealData.retrieveAllMeals.map((meal: any) => (
+                    <ToggleButton value={meal._id} key={meal._id}>
+                        <Paper
+                            key={meal.productID}
+                            style={{
+                                width: "250px",
+                                height: "350px",
+                                margin: "10px"
+                            }}>
+                            <p>{meal.title}</p>
+                            <Image width={"100px"} height={"100px"} src={meal.photoURL}/>
+                            <p>{meal.sides}</p>
+                            <p>{meal.description}</p>
+                            <p>${meal.price}</p>
+                        </Paper>
+                    </ToggleButton>
+                ))}
+            </ToggleButtonGroup>
+        )
     }
 
     return (
@@ -42,95 +45,7 @@ export default function ProductSelection(props: any) {
         }}>
             <div>
                 <Grid container spacing={10} >
-                    {mealData.retrieveAllMeals.map((meal: any) => (
-                        <Paper
-                            key={meal.productID}
-                            style={{
-                                width: "250px",
-                                height: "350px",
-                                margin: "10px"
-                            }}>
-                            <Container>
-                                <Button onClick={() => {
-
-                                }}>
-                                    <p>{meal.title}</p>
-                                    <Image width={"100px"} height={"100px"} src={meal.photoURL}/>
-                                    <p>{meal.sides}</p>
-                                    <p>{meal.description}</p>
-                                    <p>${meal.price}</p>
-                                </Button>
-                            </Container>
-                        </Paper>
-                    ))}
-                    {/*<Paper>
-                        <ToggleButtonGroup onChange={handleSelection} value={meals}>
-                            <ToggleButton value={"1"}>
-                                <Paper
-                                    style={{
-                                        width: "250px",
-                                        height: "350px",
-                                        margin: "10px"
-                                    }}>
-                                    <Container>
-                                        <p>Blackend Chicken</p>
-                                        <Image width={"100px"} height={"100px"} src={"https://res.cloudinary.com/bucketlistbodies/image/upload/v1628559096/blackened-chicken-recipe-6-of-8-735x1103_barvnu.jpg"}/>
-                                        <p>with rice and beans</p>
-                                        <p>Very Tasty</p>
-                                        <p>$9.99</p>
-                                    </Container>
-                                </Paper>
-                            </ToggleButton>
-                            <ToggleButton value={"2"}>
-                                <Paper
-                                    style={{
-                                        width: "250px",
-                                        height: "350px",
-                                        margin: "10px"
-                                    }}>
-                                    <Container>
-                                        <p>Blackend Chicken</p>
-                                        <Image width={"100px"} height={"100px"} src={"https://res.cloudinary.com/bucketlistbodies/image/upload/v1628559096/blackened-chicken-recipe-6-of-8-735x1103_barvnu.jpg"}/>
-                                        <p>with rice and beans</p>
-                                        <p>Very Tasty</p>
-                                        <p>$9.99</p>
-                                    </Container>
-                                </Paper>
-                            </ToggleButton>
-                            <ToggleButton value={"3"}>
-                                <Paper
-                                    style={{
-                                        width: "250px",
-                                        height: "350px",
-                                        margin: "10px"
-                                    }}>
-                                    <Container>
-                                        <p>Blackend Chicken</p>
-                                        <Image width={"100px"} height={"100px"} src={"https://res.cloudinary.com/bucketlistbodies/image/upload/v1628559096/blackened-chicken-recipe-6-of-8-735x1103_barvnu.jpg"}/>
-                                        <p>with rice and beans</p>
-                                        <p>Very Tasty</p>
-                                        <p>$9.99</p>
-                                    </Container>
-                                </Paper>
-                            </ToggleButton>
-                            <ToggleButton value={"4"}>
-                                <Paper
-                                    style={{
-                                        width: "250px",
-                                        height: "350px",
-                                        margin: "10px"
-                                    }}>
-                                    <Container>
-                                        <p>Blackend Chicken</p>
-                                        <Image width={"100px"} height={"100px"} src={"https://res.cloudinary.com/bucketlistbodies/image/upload/v1628559096/blackened-chicken-recipe-6-of-8-735x1103_barvnu.jpg"}/>
-                                        <p>with rice and beans</p>
-                                        <p>Very Tasty</p>
-                                        <p>$9.99</p>
-                                    </Container>
-                                </Paper>
-                            </ToggleButton>
-                        </ToggleButtonGroup>
-                    </Paper>*/}
+                    {mealsList()}
                 </Grid>
                 <br/>
                 <br/>
@@ -146,6 +61,7 @@ export default function ProductSelection(props: any) {
                         variant={"contained"}
                         color={'default'}
                         onClick={() => {
+                            props.setMeals(meals)
                             props.onPrev()
                         }}
                     > Previous </Button>
@@ -157,6 +73,7 @@ export default function ProductSelection(props: any) {
                         variant={"contained"}
                         color={'secondary'}
                         onClick={() => {
+                            props.setMeals(meals)
                             props.onNext()
                         }}
                     > Next </Button>

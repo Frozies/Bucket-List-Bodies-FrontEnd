@@ -7,6 +7,7 @@ import React, {useState} from "react";
 import {Button} from "@material-ui/core";
 import MealPlanSelection from "../../components/Admin/Orders/MealPlanSelection";
 import ProductSelection from "../../components/Admin/Orders/ProductSelection";
+import {gql, useQuery} from "@apollo/client";
 
 enum wizardStates {
     customerInfo,
@@ -32,13 +33,35 @@ interface ICustomer {
     city: string
 }
 
+const RETRIEVE_ALL_MEALS = gql`
+    query Query {
+        retrieveAllMeals {
+            _id
+            title
+            description
+            photoURL
+            price
+            sides
+            carbs
+            calories
+            allergies
+        }
+    }
+`
+
 export default function createOrder() {
     //Current Order States
-    let [customerInfo, setCustomerInfo] = useState<ICustomer>()
-    let [selectedPlan, setSelectedPlan] = useState<mealPlans>()
+    let [customerInfo, setCustomerInfo] = useState<ICustomer>();
+    let [selectedPlan, setSelectedPlan] = useState<mealPlans>();
+    let [selectedMeals, setSelectedMeals] = useState();
 
     //Page states
     let [wizardState, setWizardState] = useState<wizardStates>(wizardStates.customerInfo);
+
+    const {loading: loadMeals, error: mealError, data: mealData} = useQuery(RETRIEVE_ALL_MEALS);
+
+    if (loadMeals) return 'Loading...';
+    if (mealError) return `Error! ${mealError.message}`;
 
     let pageTitle = "Create Order";
 
@@ -69,6 +92,9 @@ export default function createOrder() {
                         {/*retrievedMeals={retrievedMeals}*/}
                         {/*retrievedInfo={selectedMeals}*/}
                         <ProductSelection
+                            mealData={mealData}
+                            setMeals={(meals: any) => {setSelectedMeals(meals)}}
+                            selectedMeals={selectedMeals}
                             onNext={()=> {setWizardState(wizardStates.success)}}
                             onPrev={()=> {setWizardState(wizardStates.mealPlan)}}
                         />
