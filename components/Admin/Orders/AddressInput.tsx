@@ -1,6 +1,6 @@
 // @ts-ignore
 import MaskedInput from "react-text-mask";
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import {render} from "react-dom";
 import {makeStyles} from "@material-ui/styles";
 import {Button, Grid, TextField} from "@material-ui/core";
@@ -28,13 +28,27 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function AddressInput(props: any) {
-    const classes = useStyles();
+interface ICustomer {
+    name: string
+    email: string
+    phone: string
+    address1: string
+    address2: string
+    postal: string
+    city: string
+}
 
-    //Phone Number Values
-    const [values, setValues] = React.useState({textmask: "(239) 123-4567",});
+
+function AddressInput(props: any) {
+    const retrievedInfo = props.retrievedInfo
+
+    const classes = useStyles();
+    let [values, setValues] = useState<ICustomer>({
+        ...retrievedInfo
+    })
 
     const handleChanges = (event: { target: { name: any; value: any; }; }) => {
+        // @ts-ignore
         setValues({
             ...values,
             [event.target.name]: event.target.value
@@ -56,6 +70,9 @@ function AddressInput(props: any) {
                     <form>
 
                         <TextField
+                            value={values.name}
+                            name={"name"}
+                            onChange={handleChanges}
                             id={"Name"}
                             label={"Name"}
                             variant={"outlined"}
@@ -63,6 +80,9 @@ function AddressInput(props: any) {
                             className={classes.textField}
                         />
                         <TextField
+                            value={values.email}
+                            name={"email"}
+                            onChange={handleChanges}
                             id={"email"}
                             label={"Email"}
                             variant={"outlined"}
@@ -71,8 +91,10 @@ function AddressInput(props: any) {
                         />
 
                         <TextField
-                            placeholder={values.textmask}
+                            value={values.phone}
+                            name={"phone"}
                             onChange={handleChanges}
+                            placeholder={"239-123-4567"}
                             label="Phone Number"
                             id="phone"
                             variant={"outlined"}
@@ -86,6 +108,9 @@ function AddressInput(props: any) {
                     <h3>Address</h3>
                     <form>
                         <TextField
+                            value={values.address1}
+                            name={"address1"}
+                            onChange={handleChanges}
                             id={"line1"}
                             label={"Address Line 1"}
                             variant={"outlined"}
@@ -94,6 +119,9 @@ function AddressInput(props: any) {
                         />
 
                         <TextField
+                            value={values.address2}
+                            name={"address2"}
+                            onChange={handleChanges}
                             id={"line2"}
                             label={"Address Line 2"}
                             fullWidth={true}
@@ -104,6 +132,9 @@ function AddressInput(props: any) {
                         />
 
                         <TextField
+                            value={values.postal}
+                            name={"postal"}
+                            onChange={handleChanges}
                             id={"zip"}
                             label={"Postal Code"}
                             variant={"outlined"}
@@ -112,6 +143,9 @@ function AddressInput(props: any) {
                         />
 
                         <TextField
+                            value={values.city}
+                            name={"city"}
+                            onChange={handleChanges}
                             id={"city"}
                             label={"City"}
                             variant={"outlined"}
@@ -130,13 +164,14 @@ function AddressInput(props: any) {
                     }}
                 >
                     <Button
+                        disabled
                         style={{
                             margin: "auto",
                             width: "25%"
                         }}
                         variant={"contained"}
                         color={'default'}
-                    > <a href={'/admin'}>Previous</a> </Button>
+                    >Previous </Button>
                     <Button
                         style={{
                             margin: "auto",
@@ -145,8 +180,8 @@ function AddressInput(props: any) {
                         variant={"contained"}
                         color={'secondary'}
                         onClick={() => {
-                            // props.onSubmit()
-                            console.log("Next")
+                            /*Using an interface, update the information state on the page*/
+                            props.setCustomerInfo(values)
                             props.onNext();
                         }}
                     > Next </Button>

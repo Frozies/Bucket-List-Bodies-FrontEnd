@@ -5,6 +5,8 @@ import styles from "../../styles/Home.module.css";
 import AdminHome from "../../components/Admin/AdminHome";
 import React, {useState} from "react";
 import {Button} from "@material-ui/core";
+import MealPlanSelection from "../../components/Admin/Orders/MealPlanSelection";
+import ProductSelection from "../../components/Admin/Orders/ProductSelection";
 
 enum wizardStates {
     customerInfo,
@@ -14,7 +16,28 @@ enum wizardStates {
     failed,
 }
 
+enum mealPlans {
+    "4_meals",
+    "5_meals",
+    "6_meals"
+}
+
+interface ICustomer {
+    name: string
+    email: string
+    phone: string
+    address1: string
+    address2: string
+    postal: string
+    city: string
+}
+
 export default function createOrder() {
+    //Current Order States
+    let [customerInfo, setCustomerInfo] = useState<ICustomer>()
+    let [selectedPlan, setSelectedPlan] = useState<mealPlans>()
+
+    //Page states
     let [wizardState, setWizardState] = useState<wizardStates>(wizardStates.customerInfo);
 
     let pageTitle = "Create Order";
@@ -23,81 +46,32 @@ export default function createOrder() {
         switch (wizardState) {
             case wizardStates.customerInfo:
                 return (
-                    <AddressInput
-                        onNext={() => {setWizardState(wizardStates.mealPlan)}}/>
+                    <div>
+                        <AddressInput
+                            retrievedInfo={customerInfo}
+                            setCustomerInfo={(customer: ICustomer) => setCustomerInfo(customer)}
+                            onNext={() => {setWizardState(wizardStates.mealPlan)}}/>
+                    </div>
                 )
             case wizardStates.mealPlan:
                 return (
-                    <div>
-                        <h1>Meal Plan</h1>
-                        <div
-                            style={{
-                                display: "flex"
-                            }}>
-                            <Button
-                                style={{
-                                    margin: "auto",
-                                    width: "25%"
-                                }}
-                                variant={"contained"}
-                                color={'default'}
-                                onClick={() => {
-                                    // props.onSubmit()
-                                    console.log("Previous")
-                                    setWizardState(wizardStates.customerInfo)
-                                }}
-                            > Previous </Button>
-                            <Button
-                                style={{
-                                    margin: "auto",
-                                    width: "25%"
-                                }}
-                                variant={"contained"}
-                                color={'secondary'}
-                                onClick={() => {
-                                    // props.onSubmit()
-                                    console.log("Next")
-                                    setWizardState(wizardStates.selectMeals)
-                                }}
-                            > Next </Button>
-                        </div>
-                    </div>
+                    <MealPlanSelection
+                        retrievedInfo={selectedPlan}
+                        mealPlans={mealPlans}
+                        setMealPlan={(plan: any)=> {setSelectedPlan(plan)}}
+                        onNext={()=> {setWizardState(wizardStates.selectMeals)}}
+                        onPrev={()=> {setWizardState(wizardStates.customerInfo)}}
+                    />
                 )
             case wizardStates.selectMeals:
                 return (
                     <div>
-                        <h1>Select Meals</h1>
-                        <div
-                            style={{
-                                display: "flex"
-                            }}>
-                            <Button
-                                style={{
-                                    margin: "auto",
-                                    width: "25%"
-                                }}
-                                variant={"contained"}
-                                color={'default'}
-                                onClick={() => {
-                                    // props.onSubmit()
-                                    console.log("Previous")
-                                    setWizardState(wizardStates.mealPlan)
-                                }}
-                            > Previous </Button>
-                            <Button
-                                style={{
-                                    margin: "auto",
-                                    width: "25%"
-                                }}
-                                variant={"contained"}
-                                color={'secondary'}
-                                onClick={() => {
-                                    // props.onSubmit()
-                                    console.log("Next")
-                                    setWizardState(wizardStates.success)
-                                }}
-                            > Next </Button>
-                        </div>
+                        {/*retrievedMeals={retrievedMeals}*/}
+                        {/*retrievedInfo={selectedMeals}*/}
+                        <ProductSelection
+                            onNext={()=> {setWizardState(wizardStates.success)}}
+                            onPrev={()=> {setWizardState(wizardStates.mealPlan)}}
+                        />
                     </div>
                 )
             case wizardStates.success:

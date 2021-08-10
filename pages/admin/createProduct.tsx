@@ -70,7 +70,6 @@ function createProduct() {
     const { register, handleSubmit } = useForm<IMealInput>();
     const [createMeal, { data: mealData, loading: mealLoading, error: mealError }] = useMutation<IMealInput>(CREATE_MEAL);
 
-    const [url, setUrl] = useState();
     const [mutateUpload, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(SINGLE_UPLOAD);
 
     const [file, setFile] = useState();
