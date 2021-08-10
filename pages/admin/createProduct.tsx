@@ -1,14 +1,39 @@
 import React, {useState} from 'react';
 import {
+    Button,
     Container,
-    Grid, Input,
-    Paper,
+    Grid, Input, InputLabel, MenuItem,
+    Paper, Select, TextField,
 } from "@material-ui/core";
 import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/Util/TopAppBar";
 import styles from "../../styles/Home.module.css";
 import {gql, useMutation} from '@apollo/client';
 import {SubmitHandler, useForm} from "react-hook-form";
+import {makeStyles} from "@material-ui/styles";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        background: 'white',
+        border: 0,
+        borderRadius: 3,
+        margin: '0 5px 5px 0',
+    },
+    cardStyle: {
+        background: 'white',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px #42a5f4',
+        color: 'black',
+        height: '100%',
+        width: '100%',
+        padding: '30px 30px',
+    }
+}));
 
 interface IMealInput {
     title: String,
@@ -41,20 +66,12 @@ const SINGLE_UPLOAD = gql`
 `;
 
 function createProduct() {
+    const classes = useStyles();
     const { register, handleSubmit } = useForm<IMealInput>();
     const [createMeal, { data: mealData, loading: mealLoading, error: mealError }] = useMutation<IMealInput>(CREATE_MEAL);
 
     const [url, setUrl] = useState();
-    const [mutateUpload, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(SINGLE_UPLOAD, {
-        onCompleted: data => {
-            try {
-                setUrl(data.singleFileUpload)
-                console.log(data.singleFileUpload)
-            }catch (e) {
-                console.log(e)
-            }
-        }
-    });
+    const [mutateUpload, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(SINGLE_UPLOAD);
 
     const [file, setFile] = useState();
     const [success, setSuccess] = useState(false);
@@ -81,38 +98,34 @@ function createProduct() {
 
 
     const onSubmit: SubmitHandler<IMealInput> = async (formData: IMealInput) => {
-
         try {
             await mutateUpload({
                 variables: {
                     singleFileUploadFile: file
                 }
-            })
-        } catch (e) {
-            return e;
-        }
-
-        try {
-            if (url) {
-                await createMeal({
-                    variables: {
-                        createMealMeal: {
-                            title: formData.title,
-                            sides: formData.sides,
-                            description: formData.description,
-                            photoURL: url,
-                            price: formData.price,
-                            carbs: formData.carbs,
-                            calories: formData.calories,
-                            allergies: formData.allergies
+            }).then(async (results)=>{
+                if (results.data.singleFileUpload) {
+                    await createMeal({
+                        variables: {
+                            createMealMeal: {
+                                title: formData.title,
+                                sides: formData.sides,
+                                description: formData.description,
+                                photoURL: results.data.singleFileUpload,
+                                price: formData.price,
+                                carbs: formData.carbs,
+                                calories: formData.calories,
+                                allergies: formData.allergies
+                            }
                         }
-                    }
-                }).then(r => {
-                    setSuccess(true)
-                });
-            } else {
-                throw "no Url"
-            }
+                    }).then((results)=> {
+                        setSuccess(true)
+                    })
+                }
+                else {
+                    throw (new Error("Failed to upload image!"))
+                }
+            })
         } catch (e) {
             return e;
         }
@@ -125,40 +138,78 @@ function createProduct() {
         if (!success) {
             return(
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <label>Meal Photo</label>
-                    <Input {...register("photoURL")} type="file" name="picture" onChange={onChange}/>
+                    <br/>
+                    <InputLabel id={"photo"}>Meal Photo</InputLabel>
+                    <TextField
+                        className={classes.textField}
+                        variant={"outlined"}
+                        id={"photo"}
+                        {...register("photoURL")}
+                        type="file"
+                        name="picture"
+                        onChange={onChange}/>
                     <br/>
 
-                    <label>Title</label>
-                    <Input {...register("title")}/>
+                    <TextField
+                        {...register("title")}
+                        label={"Title"}
+                        className={classes.textField}
+                        variant={"outlined"}
+                    />
                     <br/>
 
-                    <label>Sides</label>
-                    <Input {...register("sides")}/>
+                    <TextField
+                        {...register("sides")}
+                        label={"Sides"}
+                        className={classes.textField}
+                        variant={"outlined"}
+                    />
                     <br/>
 
-                    <label>Description</label>
-                    <Input {...register("description")} />
+                    <TextField
+                        {...register("description")}
+                        label={"Description"}
+                        className={classes.textField}
+                        variant={"outlined"}
+                    />
                     <br/>
 
-                    <label>Amount</label>
-                    <Input {...register("price")}  />
+                    <TextField
+                        {...register("price")}
+                        label={"Price"}
+                        className={classes.textField}
+                        variant={"outlined"}
+                    />
                     <br/>
 
-                    <label>Carbs</label>
-                    <Input {...register("carbs")} />
+                    <TextField
+                        {...register("carbs")}
+                        label={"Carbs"}
+                        className={classes.textField}
+                        variant={"outlined"}
+                    />
                     <br/>
 
-                    <label>Calories</label>
-                    <Input {...register("calories")} />
+                    <TextField
+                        {...register("calories")}
+                        label={"Calories"}
+                        className={classes.textField}
+                        variant={"outlined"}
+                    />
+                    <br/>
                     <br/>
 
-                    <label>Allergies Selection</label>
-                    <select {...register("allergies")} >
-                        <option value="fish">fish</option>
-                        <option value="nuts">nuts</option>
-                        <option value="other">other</option>
-                    </select>
+                    <InputLabel id={"allergies"}>Allergies</InputLabel>
+                    <Select
+                        labelId={"allergies"}
+                        fullWidth={true}
+                        variant={"outlined"}
+                    >
+                        <MenuItem value="fish">fish</MenuItem>
+                        <MenuItem value="nuts">nuts</MenuItem>
+                        <MenuItem value="other">other</MenuItem>
+                    </Select>
+                    <br/>
                     <br/>
 
                     <Input type="submit" />
@@ -169,8 +220,24 @@ function createProduct() {
             return (
                 <div>
                     <h1> Success!</h1>
-                    <button><a href={"/admin/createProduct"}>Create another product</a></button>
-                    <button><a href={"/admin"}>Return</a></button>
+                    <Button
+                        style={{
+                        margin: "auto",
+                        width: "25%"
+                    }}
+                                 variant={"contained"}
+                                 color={'default'}>
+                        <a href={"/admin/createProduct"}>Create another product</a>
+                    </Button>
+                    <Button
+                        href={"/admin"}
+                        style={{
+                            margin: "auto",
+                            width: "25%"
+                        }}
+                        variant={"contained"}
+                        color={'default'}
+                    >Return</Button>
                 </div>
             )
         }
