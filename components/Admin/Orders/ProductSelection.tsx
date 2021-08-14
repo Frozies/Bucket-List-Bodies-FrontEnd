@@ -10,7 +10,10 @@ export default function ProductSelection(props: any) {
     const mealPlan = props.mealPlan
 
     const total = mealPlan
-    const [currentCount, setCurrentCount] = useState(0);
+    const [currentCount, setCurrentCount] = useState(()=> {
+        if(props.selectedMeals) return props.selectedMeals.length
+        else return 0
+    });
     const [meals, setMeals] = useState(props.selectedMeals);
 
     // @ts-ignore
@@ -54,7 +57,6 @@ export default function ProductSelection(props: any) {
                 {mealsList()}
                 <br/>
                 <br/>
-                {cartShape(currentCount, total)}
                 <div
                     style={{
                         display: "flex"
@@ -71,6 +73,10 @@ export default function ProductSelection(props: any) {
                             props.onPrev()
                         }}
                     > Previous </Button>
+
+                    {cartShape(currentCount, total)}
+
+
                     <Button
                         style={{
                             margin: "auto",
