@@ -2,13 +2,11 @@ import AddressInput from "../../components/Admin/Orders/AddressInput";
 import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/Util/TopAppBar";
 import styles from "../../styles/Home.module.css";
-import AdminHome from "../../components/Admin/AdminHome";
 import React, {useState} from "react";
 import {Button} from "@material-ui/core";
 import MealPlanSelection from "../../components/Admin/Orders/MealPlanSelection";
 import ProductSelection from "../../components/Admin/Orders/ProductSelection";
-import {gql, useMutation, useQuery} from "@apollo/client";
-import {SubmitHandler} from "react-hook-form";
+import {gql, useQuery} from "@apollo/client";
 
 enum wizardStates {
     customerInfo,
@@ -50,7 +48,7 @@ const RETRIEVE_ALL_MEALS = gql`
     }
 `
 
-const PUSH_ORDER = gql`
+/*const PUSH_ORDER = gql`
     mutation Mutation($orderInput: OrderInput) {
         createOrder(order: $orderInput){
             customer {
@@ -62,19 +60,19 @@ const PUSH_ORDER = gql`
             total
         }
     }
-`
+`*/
 
-export default function createOrder() {
+export let order = function createOrder() {
     //Current Order States
     let [customerInfo, setCustomerInfo] = useState<ICustomer>();
     let [selectedPlan, setSelectedPlan] = useState<mealPlans>();
     let [selectedMeals, setSelectedMeals] = useState();
 
     //Page states
-    let [wizardState, setWizardState] = useState<wizardStates>(wizardStates.customerInfo);
+    let [wizardState, setWizardState] = useState<wizardStates>( wizardStates.customerInfo );
 
-    const {loading: loadMeals, error: mealError, data: mealData} = useQuery(RETRIEVE_ALL_MEALS);
-    const [createOrder, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(PUSH_ORDER);
+    const {loading: loadMeals, error: mealError, data: mealData} = useQuery( RETRIEVE_ALL_MEALS );
+    /*const [createOrder, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(PUSH_ORDER);
 
     const onSubmit: SubmitHandler<any> = async (formData: any) => {
         try {
@@ -99,14 +97,14 @@ export default function createOrder() {
                         notes: formData.notes,
                     }
                 }
-            })/*.then((results)=> {
+            })/!*.then((results)=> {
                 setSuccess(true)
-            })*/
+            })*!/
         } catch (e) {
             return e;
         }
     }
-
+*/
     if (loadMeals) return 'Loading...';
     if (mealError) return `Error! ${mealError.message}`;
 
@@ -119,8 +117,10 @@ export default function createOrder() {
                     <div>
                         <AddressInput
                             retrievedInfo={customerInfo}
-                            setCustomerInfo={(customer: ICustomer) => setCustomerInfo(customer)}
-                            onNext={() => {setWizardState(wizardStates.mealPlan)}}/>
+                            setCustomerInfo={(customer: ICustomer) => setCustomerInfo( customer )}
+                            onNext={() => {
+                                setWizardState( wizardStates.mealPlan )
+                            }}/>
                     </div>
                 )
             case wizardStates.mealPlan:
@@ -128,9 +128,15 @@ export default function createOrder() {
                     <MealPlanSelection
                         retrievedInfo={selectedPlan}
                         mealPlans={mealPlans}
-                        setMealPlan={(plan: any)=> {setSelectedPlan(plan)}}
-                        onNext={()=> {setWizardState(wizardStates.selectMeals)}}
-                        onPrev={()=> {setWizardState(wizardStates.customerInfo)}}
+                        setMealPlan={(plan: any) => {
+                            setSelectedPlan( plan )
+                        }}
+                        onNext={() => {
+                            setWizardState( wizardStates.selectMeals )
+                        }}
+                        onPrev={() => {
+                            setWizardState( wizardStates.customerInfo )
+                        }}
                     />
                 )
             case wizardStates.selectMeals:
@@ -140,10 +146,16 @@ export default function createOrder() {
                         {/*retrievedInfo={selectedMeals}*/}
                         <ProductSelection
                             mealData={mealData}
-                            setMeals={(meals: any) => {setSelectedMeals(meals)}}
+                            setMeals={(meals: any) => {
+                                setSelectedMeals( meals )
+                            }}
                             selectedMeals={selectedMeals}
-                            onNext={()=> {setWizardState(wizardStates.success)}}
-                            onPrev={()=> {setWizardState(wizardStates.mealPlan)}}
+                            onNext={() => {
+                                setWizardState( wizardStates.success )
+                            }}
+                            onPrev={() => {
+                                setWizardState( wizardStates.mealPlan )
+                            }}
                         />
                     </div>
                 )
@@ -184,15 +196,15 @@ export default function createOrder() {
         <div>
             <Helmet>
                 <title>{pageTitle}</title>
-                <meta name="description" content="Bucket list bodies is a good place to get food from!" />
-                <link rel="icon" href="/favicon.ico" />
+                <meta name="description" content="Bucket list bodies is a good place to get food from!"/>
+                <link rel="icon" href="/favicon.ico"/>
             </Helmet>
 
-            <TopAppBar pageTitle={pageTitle} />
+            <TopAppBar pageTitle={pageTitle}/>
 
             <main className={styles.container}>
                 <div className={styles.main}>
-                    {switchStates(wizardState)}
+                    {switchStates( wizardState )}
                 </div>
             </main>
 
@@ -201,4 +213,4 @@ export default function createOrder() {
         </footer>*/}
         </div>
     )
-}
+};

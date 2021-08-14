@@ -1,9 +1,7 @@
-// @ts-ignore
-import MaskedInput from "react-text-mask";
 import React, {Component, useState} from "react";
-import {render} from "react-dom";
 import {makeStyles} from "@material-ui/styles";
 import {Button, Grid, TextField} from "@material-ui/core";
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,6 +53,7 @@ function AddressInput(props: any) {
         });
     };
 
+    // @ts-ignore
     return (
 
         <div>
@@ -65,62 +64,75 @@ function AddressInput(props: any) {
                 <p>
                     Enter in the address and contact information for a new order.
                 </p>
-                <div>
+                <ValidatorForm
+                    onSubmit={()=>{
+                        props.setCustomerInfo(values)
+                        console.log(values)
+                        props.onNext();
+                    }}
+                    onError={(errors: any) => console.log(errors)}
+                    >
                     <h3>Personal</h3>
-                    <form>
-
-                        <TextField
+                        <TextValidator
                             value={values.name}
                             name={"name"}
+                            // @ts-ignore
                             onChange={handleChanges}
                             id={"Name"}
                             label={"Name"}
                             variant={"outlined"}
                             placeholder={"John Wick"}
                             className={classes.textField}
+                            validators={['required']}
+                            errorMessages={['This field is required.']}
                         />
-                        <TextField
+                        <TextValidator
                             value={values.email}
                             name={"email"}
+                            // @ts-ignore
                             onChange={handleChanges}
                             id={"email"}
                             label={"Email"}
                             variant={"outlined"}
                             placeholder={"JohnWick@hotmail.com"}
                             className={classes.textField}
+                            /*validators={['required', 'isEmail']}
+                            errorMessages={['this field is required', 'email is not valid']}*/
                         />
 
-                        <TextField
+                        <TextValidator
                             value={values.phone}
                             name={"phone"}
+                            // @ts-ignore
                             onChange={handleChanges}
                             placeholder={"239-123-4567"}
                             label="Phone Number"
                             id="phone"
                             variant={"outlined"}
                             className={classes.textField}
+                            validators={['required']}
+                            errorMessages={['This field is required.']}
                         />
-                    </form>
 
-                </div>
-
-                <div>
                     <h3>Address</h3>
-                    <form>
-                        <TextField
+                        <TextValidator
                             value={values.address1}
                             name={"address1"}
+                            // @ts-ignore
                             onChange={handleChanges}
                             id={"line1"}
                             label={"Address Line 1"}
                             variant={"outlined"}
                             fullWidth={true}
                             className={classes.textField}
+                            validators={['required']}
+                            errorMessages={['This field is required.']}
                         />
 
-                        <TextField
+                        <TextValidator
                             value={values.address2}
                             name={"address2"}
+                            // @ts-ignore
                             onChange={handleChanges}
                             id={"line2"}
                             label={"Address Line 2"}
@@ -131,31 +143,34 @@ function AddressInput(props: any) {
                             }
                         />
 
-                        <TextField
+                        <TextValidator
                             value={values.postal}
                             name={"postal"}
+                            // @ts-ignore
                             onChange={handleChanges}
                             id={"zip"}
                             label={"Postal Code"}
                             variant={"outlined"}
                             placeholder={"33919"}
                             className={classes.textField}
+                            validators={['required']}
+                            errorMessages={['This field is required.']}
                         />
 
-                        <TextField
+                        <TextValidator
                             value={values.city}
                             name={"city"}
+                            // @ts-ignore
                             onChange={handleChanges}
                             id={"city"}
                             label={"City"}
                             variant={"outlined"}
                             placeholder={"New York"}
                             className={classes.textField}
+
+                            validators={['required']}
+                            errorMessages={['This field is required.']}
                         />
-                    </form>
-
-                </div>
-
                 <br/>
 
                 <div
@@ -179,13 +194,12 @@ function AddressInput(props: any) {
                         }}
                         variant={"contained"}
                         color={'secondary'}
-                        onClick={() => {
-                            /*Using an interface, update the information state on the page*/
-                            props.setCustomerInfo(values)
-                            props.onNext();
-                        }}
+                        type={"submit"}
                     > Next </Button>
+
                 </div>
+
+                </ValidatorForm>
             </div>
         </div>
     );
