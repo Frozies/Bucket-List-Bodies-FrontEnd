@@ -3,14 +3,21 @@ import {gql, useQuery} from "@apollo/client";
 import {Button, Container, Grid, Paper} from '@material-ui/core';
 import Image from 'next/image'
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
+import cartShape from '../../../components/cartShape'
 
 export default function ProductSelection(props: any) {
     const mealData = props.mealData
+    const mealPlan = props.mealPlan
+
+    const total = mealPlan
+    const [currentCount, setCurrentCount] = useState(0);
     const [meals, setMeals] = useState(props.selectedMeals);
 
     // @ts-ignore
     const handleSelection = (event: any, newSelection: React.SetStateAction) => {
         setMeals(newSelection);
+        setCurrentCount(newSelection.length)
+        console.log(newSelection)
     }
 
     const mealsList = () => {
@@ -44,11 +51,10 @@ export default function ProductSelection(props: any) {
             height: "auto"
         }}>
             <div>
-                <Grid container spacing={10} >
-                    {mealsList()}
-                </Grid>
+                {mealsList()}
                 <br/>
                 <br/>
+                {cartShape(currentCount, total)}
                 <div
                     style={{
                         display: "flex"

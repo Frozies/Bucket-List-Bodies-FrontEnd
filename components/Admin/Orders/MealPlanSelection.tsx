@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MealPlanSelection(props: any) {
-    const mealPlans = props.mealPlans;
     const selectedPlan = props.retrievedInfo
     const classes = useStyles();
 
@@ -70,13 +69,14 @@ export default function MealPlanSelection(props: any) {
                     value={plan}
                     exclusive
                 >
-                    <ToggleButton value={mealPlans["4_meals"]}>
+                    {/*TODO: Iterate over this later. Hard coding this is going to be a pain in the butt later...*/}
+                    <ToggleButton value={4}>
                         4 meals
                     </ToggleButton>
-                    <ToggleButton value={mealPlans["5_meals"]}>
+                    <ToggleButton value={5}>
                         5 meals
                     </ToggleButton>
-                    <ToggleButton value={mealPlans["6_meals"]}>
+                    <ToggleButton value={6}>
                         6 meals
                     </ToggleButton>
                 </ToggleButtonGroup>

@@ -16,12 +16,6 @@ enum wizardStates {
     failed,
 }
 
-enum mealPlans {
-    "4_meals",
-    "5_meals",
-    "6_meals"
-}
-
 interface ICustomer {
     name: string
     email: string
@@ -65,7 +59,7 @@ const RETRIEVE_ALL_MEALS = gql`
 let order = function createOrder() {
     //Current Order States
     let [customerInfo, setCustomerInfo] = useState<ICustomer>();
-    let [selectedPlan, setSelectedPlan] = useState<mealPlans>();
+    let [selectedPlan, setSelectedPlan] = useState();
     let [selectedMeals, setSelectedMeals] = useState();
 
     //Page states
@@ -127,7 +121,6 @@ let order = function createOrder() {
                 return (
                     <MealPlanSelection
                         retrievedInfo={selectedPlan}
-                        mealPlans={mealPlans}
                         setMealPlan={(plan: any) => {
                             setSelectedPlan( plan )
                         }}
@@ -145,7 +138,8 @@ let order = function createOrder() {
                         {/*retrievedMeals={retrievedMeals}*/}
                         {/*retrievedInfo={selectedMeals}*/}
                         <ProductSelection
-                            mealData={mealData}
+                            mealData={mealData} //todo: rename to explain that this is a list of every meal
+                            mealPlan={selectedPlan}
                             setMeals={(meals: any) => {
                                 setSelectedMeals( meals )
                             }}
