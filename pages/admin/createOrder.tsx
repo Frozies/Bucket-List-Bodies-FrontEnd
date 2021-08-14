@@ -62,7 +62,7 @@ const RETRIEVE_ALL_MEALS = gql`
     }
 `*/
 
-export let order = function createOrder() {
+let order = function createOrder() {
     //Current Order States
     let [customerInfo, setCustomerInfo] = useState<ICustomer>();
     let [selectedPlan, setSelectedPlan] = useState<mealPlans>();
@@ -214,3 +214,4 @@ export let order = function createOrder() {
         </div>
     )
 };
+export default order

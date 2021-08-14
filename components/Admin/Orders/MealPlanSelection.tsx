@@ -1,7 +1,7 @@
 import {Button, TextField} from "@material-ui/core";
 import React, {useState} from "react";
 import {makeStyles} from "@material-ui/styles";
-import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
+import {Alert, ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,12 +35,24 @@ export default function MealPlanSelection(props: any) {
 
     // @ts-ignore
     const [plan, setPlan] = useState<mealPlans>(selectedPlan);
+    const [inputError, setInputError] = useState(false);
 
     // @ts-ignore
     const handleSelection = (event: any, newSelection: React.SetStateAction<mealPlans>) => {
         setPlan(newSelection);
     }
 
+    const errorPopup = () => {
+        if (inputError) {
+            return (
+                <Alert variant="filled" severity="error">
+                    Please select a plan.
+                </Alert>
+            )
+        }
+    }
+
+    // @ts-ignore
     return (
         <div>
             <div className={classes.cardStyle}>
@@ -51,8 +63,13 @@ export default function MealPlanSelection(props: any) {
                     Select the Meal Plan
                 </p>
 
+                {errorPopup()}
 
-                <ToggleButtonGroup onChange={handleSelection} value={plan} exclusive>
+                <ToggleButtonGroup
+                    onChange={handleSelection}
+                    value={plan}
+                    exclusive
+                >
                     <ToggleButton value={mealPlans["4_meals"]}>
                         4 meals
                     </ToggleButton>
@@ -92,8 +109,13 @@ export default function MealPlanSelection(props: any) {
                         variant={"contained"}
                         color={'secondary'}
                         onClick={() => {
-                            props.setMealPlan(plan)
-                            props.onNext()
+                            if (plan != undefined) {
+                                props.setMealPlan(plan)
+                                props.onNext()
+                            }
+                            else {
+                                setInputError(true)
+                            }
                         }}
                     > Next </Button>
                 </div>
