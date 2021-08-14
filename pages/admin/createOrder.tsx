@@ -7,7 +7,8 @@ import React, {useState} from "react";
 import {Button} from "@material-ui/core";
 import MealPlanSelection from "../../components/Admin/Orders/MealPlanSelection";
 import ProductSelection from "../../components/Admin/Orders/ProductSelection";
-import {gql, useQuery} from "@apollo/client";
+import {gql, useMutation, useQuery} from "@apollo/client";
+import {SubmitHandler} from "react-hook-form";
 
 enum wizardStates {
     customerInfo,
@@ -49,6 +50,20 @@ const RETRIEVE_ALL_MEALS = gql`
     }
 `
 
+const PUSH_ORDER = gql`
+    mutation Mutation($orderInput: OrderInput) {
+        createOrder(order: $orderInput){
+            customer {
+                name
+            }
+            meals {
+                _id
+            }
+            total
+        }
+    }
+`
+
 export default function createOrder() {
     //Current Order States
     let [customerInfo, setCustomerInfo] = useState<ICustomer>();
@@ -59,6 +74,38 @@ export default function createOrder() {
     let [wizardState, setWizardState] = useState<wizardStates>(wizardStates.customerInfo);
 
     const {loading: loadMeals, error: mealError, data: mealData} = useQuery(RETRIEVE_ALL_MEALS);
+    const [createOrder, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(PUSH_ORDER);
+
+    const onSubmit: SubmitHandler<any> = async (formData: any) => {
+        try {
+            await createOrder({
+                variables: {
+                    orderInput: {
+                        customer: {
+                            name: formData.customer.name,
+                            phone: formData.customer.phone,
+                            address: {
+                                city: formData.customer.address.city,
+                                line1: formData.customer.address.line1,
+                                line2: formData.customer.address.line2,
+                                postal: formData.customer.address.postal,
+                                state: formData.customer.address.state,
+                            }
+                        },
+                        meals: {
+                            _id: formData.meals._id,
+                        },
+                        coupon: formData.coupon,
+                        notes: formData.notes,
+                    }
+                }
+            })/*.then((results)=> {
+                setSuccess(true)
+            })*/
+        } catch (e) {
+            return e;
+        }
+    }
 
     if (loadMeals) return 'Loading...';
     if (mealError) return `Error! ${mealError.message}`;
