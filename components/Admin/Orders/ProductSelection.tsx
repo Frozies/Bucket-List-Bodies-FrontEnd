@@ -21,10 +21,6 @@ export default function ProductSelection(props: any) {
         else return []
     });
 
-    useEffect(()=>{
-        console.log(meals)
-    }, [meals])
-
     const addMeal = (meal: String) => {
         setMeals(meals.concat(meal))
         iterateCount(1)
@@ -61,14 +57,12 @@ export default function ProductSelection(props: any) {
                         <p>${meal.price}</p>
                         <Button onClick={()=>{
                             removeMeal(meal._id)
-                            console.log(meals)
                         }}>
                             <RemoveIcon/>
                         </Button>
                         <Button
                             onClick={()=>{
                                 addMeal(meal._id)
-                                console.log(meals)
                             }}
                         >
                             <AddIcon/>
@@ -119,7 +113,7 @@ export default function ProductSelection(props: any) {
                             props.setMeals(meals)
                             props.onNext()
                         }}
-                    > Next </Button>
+                    > Submit order </Button>
                 </div>
             </div>
         </Paper>

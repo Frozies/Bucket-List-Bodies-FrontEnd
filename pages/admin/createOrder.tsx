@@ -6,7 +6,7 @@ import React, {useState} from "react";
 import {Button} from "@material-ui/core";
 import MealPlanSelection from "../../components/Admin/Orders/MealPlanSelection";
 import ProductSelection from "../../components/Admin/Orders/ProductSelection";
-import {gql, useQuery} from "@apollo/client";
+import {gql, useMutation, useQuery} from "@apollo/client";
 
 enum wizardStates {
     customerInfo,
@@ -42,33 +42,32 @@ const RETRIEVE_ALL_MEALS = gql`
     }
 `
 
-/*const PUSH_ORDER = gql`
+const PUSH_ORDER = gql`
     mutation Mutation($orderInput: OrderInput) {
         createOrder(order: $orderInput){
             customer {
                 name
             }
-            meals {
-                _id
-            }
+            
             total
         }
     }
-`*/
+`
 
 let order = function createOrder() {
     //Current Order States
     let [customerInfo, setCustomerInfo] = useState<ICustomer>();
     let [selectedPlan, setSelectedPlan] = useState();
     let [selectedMeals, setSelectedMeals] = useState();
+    let [successfulOrder, setSuccessfulOrder] = useState(false);
 
     //Page states
     let [wizardState, setWizardState] = useState<wizardStates>( wizardStates.customerInfo );
 
     const {loading: loadMeals, error: mealError, data: mealData} = useQuery( RETRIEVE_ALL_MEALS );
-    /*const [createOrder, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(PUSH_ORDER);
+    const [createOrder, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(PUSH_ORDER);
 
-    const onSubmit: SubmitHandler<any> = async (formData: any) => {
+    const submitOrder = async (formData: any) => {
         try {
             await createOrder({
                 variables: {
@@ -91,14 +90,14 @@ let order = function createOrder() {
                         notes: formData.notes,
                     }
                 }
-            })/!*.then((results)=> {
-                setSuccess(true)
-            })*!/
+            }).then((results)=> {
+                setSuccessfulOrder(true)
+            })
         } catch (e) {
             return e;
         }
     }
-*/
+
     if (loadMeals) return 'Loading...';
     if (mealError) return `Error! ${mealError.message}`;
 
@@ -145,8 +144,15 @@ let order = function createOrder() {
                             }}
                             selectedMeals={selectedMeals}
                             onNext={() => {
-                                setWizardState( wizardStates.success )
-                            }}
+                                /*Send the meal to the db then success*/
+                                    submitOrder( {
+
+                                    }).then( r => {
+                                        if (r) setWizardState( wizardStates.success )
+                                        else setWizardState( wizardStates.failed )
+                                    })
+
+                             }}
                             onPrev={() => {
                                 setWizardState( wizardStates.mealPlan )
                             }}
