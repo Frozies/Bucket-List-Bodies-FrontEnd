@@ -41,32 +41,49 @@ export default function ProductSelection(props: any) {
 
     const mealsList = () => {
         return (
-            <Grid direction={"row"}>
+            <Grid container direction={"row"} spacing={8}>
                 {mealData.retrieveAllMeals.map((meal: any) => (
                     <Paper
                         key={meal.productID}
                         style={{
                             width: "250px",
-                            height: "350px",
-                            margin: "10px"
+                            height: "400px",
+                            margin: "10px",
+                            display: "flex",
+                            flexDirection: "column",
+
                         }}>
-                        <p>{meal.title}</p>
-                        <Image width={"100px"} height={"100px"} src={meal.photoURL}/>
-                        <p>{meal.sides}</p>
-                        <p>{meal.description}</p>
-                        <p>${meal.price}</p>
-                        <Button onClick={()=>{
-                            removeMeal(meal._id)
-                        }}>
-                            <RemoveIcon/>
-                        </Button>
-                        <Button
-                            onClick={()=>{
-                                addMeal(meal._id)
-                            }}
+                        <div style={{
+                            margin: "auto",
+                        }}
                         >
-                            <AddIcon/>
-                        </Button>
+                            <div style={{
+                                width: "250px",
+                                height: "200px",
+                                position: "relative"
+                            }}>,
+                                <Image layout={"fill"} src={meal.photoURL}/>
+                            </div>
+                            <p>{meal.title}</p>
+                            <p>{meal.sides}</p>
+                            <p>{meal.description}</p>
+                            <p>${meal.price}</p>
+                            <div>
+                                <Button
+                                    onClick={()=>{
+                                    removeMeal(meal._id)
+                                }}>
+                                    <RemoveIcon/>
+                                </Button>
+                                <Button
+                                    onClick={()=>{
+                                        addMeal(meal._id)
+                                    }}
+                                >
+                                    <AddIcon/>
+                                </Button>
+                            </div>
+                        </div>
                     </Paper>
                 ))}
             </Grid>

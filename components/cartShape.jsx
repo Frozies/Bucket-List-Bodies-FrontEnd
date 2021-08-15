@@ -20,5 +20,7 @@ const cartShape = (currentAmount = 5, totalAmount = 8) => {
         </div>
     )
 };
+/*positining for single digits left: 11.5px, left: 32px*/
+/*positioning for double digits left: 7.5px, left: 28px*/
 
 export default cartShape

@@ -134,8 +134,6 @@ let order = function createOrder() {
             case wizardStates.selectMeals:
                 return (
                     <div>
-                        {/*retrievedMeals={retrievedMeals}*/}
-                        {/*retrievedInfo={selectedMeals}*/}
                         <ProductSelection
                             mealData={mealData} //todo: rename to explain that this is a list of every meal
                             mealPlan={selectedPlan}
