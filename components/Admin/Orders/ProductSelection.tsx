@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {gql, useQuery} from "@apollo/client";
 import {Button, Container, Grid, Paper} from '@material-ui/core';
 import Image from 'next/image'
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
 import cartShape from '../../../components/cartShape'
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import {set} from "react-hook-form";
 
 export default function ProductSelection(props: any) {
     const mealData = props.mealData
@@ -25,25 +27,37 @@ export default function ProductSelection(props: any) {
 
     const mealsList = () => {
         return (
-            <ToggleButtonGroup onChange={handleSelection} value={meals}>
+            <Grid direction={"row"}>
                 {mealData.retrieveAllMeals.map((meal: any) => (
-                    <ToggleButton value={meal._id} key={meal._id}>
-                        <Paper
-                            key={meal.productID}
-                            style={{
-                                width: "250px",
-                                height: "350px",
-                                margin: "10px"
-                            }}>
-                            <p>{meal.title}</p>
-                            <Image width={"100px"} height={"100px"} src={meal.photoURL}/>
-                            <p>{meal.sides}</p>
-                            <p>{meal.description}</p>
-                            <p>${meal.price}</p>
-                        </Paper>
-                    </ToggleButton>
+                    <Paper
+                        key={meal.productID}
+                        style={{
+                            width: "250px",
+                            height: "350px",
+                            margin: "10px"
+                        }}>
+                        <p>{meal.title}</p>
+                        <Image width={"100px"} height={"100px"} src={meal.photoURL}/>
+                        <p>{meal.sides}</p>
+                        <p>{meal.description}</p>
+                        <p>${meal.price}</p>
+                        <Button onClick={()=>{
+                            meals.remove(meal._id)
+                            setCurrentCount(currentCount+1)
+                        }}>
+                            <RemoveIcon/>
+                        </Button>
+                        <Button
+                            onClick={()=>{
+                                setMeals((meals: any) => [...meals, meal._id])
+                                setCurrentCount(currentCount-1)
+                            }}
+                        >
+                            <AddIcon/>
+                        </Button>
+                    </Paper>
                 ))}
-            </ToggleButtonGroup>
+            </Grid>
         )
     }
 
@@ -75,7 +89,6 @@ export default function ProductSelection(props: any) {
                     > Previous </Button>
 
                     {cartShape(currentCount, total)}
-
 
                     <Button
                         style={{
