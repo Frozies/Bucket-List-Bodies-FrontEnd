@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Container, Grid, Paper} from '@material-ui/core';
 import Image from 'next/image'
 import {ToggleButton, ToggleButtonGroup} from '@material-ui/lab';
@@ -16,13 +16,31 @@ export default function ProductSelection(props: any) {
         if(props.selectedMeals) return props.selectedMeals.length
         else return 0
     });
-    const [meals, setMeals] = useState(props.selectedMeals);
+    const [meals, setMeals] = useState(()=> {
+        if(props.selectedMeals) return props.selectedMeals
+        else return []
+    });
 
-    // @ts-ignore
-    const handleSelection = (event: any, newSelection: React.SetStateAction) => {
-        setMeals(newSelection);
-        setCurrentCount(newSelection.length)
-        console.log(newSelection)
+    useEffect(()=>{
+        console.log(meals)
+    }, [meals])
+
+    const addMeal = (meal: String) => {
+        setMeals(meals.concat(meal))
+        iterateCount(1)
+        //todo: if meals are greater than the meal-plan count => do stuff
+    }
+
+    const removeMeal = (meal: String) => {
+        // setMeals(meals.splice(newMeal))
+        let index = meals.indexOf(meal);
+        meals.splice(index,1);
+        iterateCount(-1)
+    }
+
+    const iterateCount = (amount: Number) => {
+        if (currentCount + amount < 0) setCurrentCount(0)
+        else setCurrentCount(currentCount + amount)
     }
 
     const mealsList = () => {
@@ -42,15 +60,15 @@ export default function ProductSelection(props: any) {
                         <p>{meal.description}</p>
                         <p>${meal.price}</p>
                         <Button onClick={()=>{
-                            meals.remove(meal._id)
-                            setCurrentCount(currentCount+1)
+                            removeMeal(meal._id)
+                            console.log(meals)
                         }}>
                             <RemoveIcon/>
                         </Button>
                         <Button
                             onClick={()=>{
-                                setMeals((meals: any) => [...meals, meal._id])
-                                setCurrentCount(currentCount-1)
+                                addMeal(meal._id)
+                                console.log(meals)
                             }}
                         >
                             <AddIcon/>
