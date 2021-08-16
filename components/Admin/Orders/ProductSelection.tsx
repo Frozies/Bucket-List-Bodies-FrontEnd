@@ -21,10 +21,12 @@ export default function ProductSelection(props: any) {
         else return []
     });
 
+    const [submitDisabled, setSubmitDisabled] = useState(true)
+    const [cartColor, setCartColor] = useState("")
+
     const addMeal = (meal: String) => {
         setMeals(meals.concat(meal))
         iterateCount(1)
-        //todo: if meals are greater than the meal-plan count => do stuff
     }
 
     const removeMeal = (meal: String) => {
@@ -33,6 +35,24 @@ export default function ProductSelection(props: any) {
         meals.splice(index,1);
         iterateCount(-1)
     }
+
+    useEffect(() => {
+        if (currentCount > total) {
+            setSubmitDisabled(true)
+            //change cart count to red
+            setCartColor("#f44336")
+        }
+
+        else if (currentCount < total) {
+            setSubmitDisabled(true)
+            setCartColor("#333")
+        }
+
+        else if (currentCount == total) {
+            setSubmitDisabled(false)
+            setCartColor("#4caf50")
+        }
+    }, [currentCount])
 
     const iterateCount = (amount: Number) => {
         if (currentCount + amount < 0) setCurrentCount(0)
@@ -117,13 +137,14 @@ export default function ProductSelection(props: any) {
                         }}
                     > Previous </Button>
 
-                    {cartShape(currentCount, total)}
+                    {cartShape(currentCount, total, cartColor)}
 
                     <Button
                         style={{
                             margin: "auto",
                             width: "25%"
                         }}
+                        disabled={submitDisabled}
                         variant={"contained"}
                         color={'secondary'}
                         onClick={() => {

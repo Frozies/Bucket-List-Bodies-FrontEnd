@@ -1,17 +1,23 @@
 import React from "react";
-const cartShape = (currentAmount = 5, totalAmount = 8) => {
+
+const cartShape = (currentAmount = 5, totalAmount = 8, color) => {
+    console.log(color)
     return (
         <div>
             <p style={{
                 position: "relative",
                 bottom: "-69px",
-                left: "11.5px"
+                left: "11.5px",
+                color: color,
             }}>{currentAmount}</p>
+
             <p style={{
                 position: "relative",
                 bottom: "-31.5px",
-                left: "32px"
+                left: "32px",
+                color: color,
             }}>{totalAmount}</p>
+
             <svg width={31} height={25} viewBox={"0 0 31 25"} xmlns={"http://www.w3.org/2000/svg"}>
                 <circle cx={20.5} cy={22.5} r={2} stroke={"#333"}/>
                 <circle cx={10.5} cy={22.5} r={2} stroke={"#333"}/>
