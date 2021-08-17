@@ -75,20 +75,20 @@ let order = function createOrder() {
         try {
             await createOrder({
                 variables: {
-                    "createOrderOrder": {
-                        "deliveryDate": "10",
-                        "notes": "notes",
-                        "coupon": "coupin",
-                        "meals": selectedMeals,
-                        "customer": {
-                            "name": customerInfo?.name,
-                            "phone": customerInfo?.phone,
-                            "address": {
-                                "line1": customerInfo?.address1,
-                                "line2": customerInfo?.address2,
-                                "city": customerInfo?.city,
-                                "postal": customerInfo?.postal,
-                                "state": "FL"
+                    createOrderOrder: {
+                        deliveryDate: "10",
+                        notes: "notes",
+                        coupon: "coupon",
+                        meals: selectedMeals,
+                        customer: {
+                            name: customerInfo?.name,
+                            phone: customerInfo?.phone,
+                            address: {
+                                line1: customerInfo?.address1,
+                                line2: customerInfo?.address2,
+                                city: customerInfo?.city,
+                                postal: customerInfo?.postal,
+                                state: "FL"
                             }
                         }
                     }
