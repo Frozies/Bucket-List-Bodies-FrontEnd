@@ -33,6 +33,7 @@ module.exports = {
       '/admin': { page: '/admin' },
       '/admin/createProduct': { page: '/admin/createProduct' },
       '/admin/createOrder': { page: '/admin/createOrder' },
+      '/admin/orders': { page: '/admin/orders' },
     }
   },
   images: {
