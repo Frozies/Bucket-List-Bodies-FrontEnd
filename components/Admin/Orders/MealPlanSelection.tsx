@@ -30,8 +30,6 @@ export default function MealPlanSelection(props: any) {
     const selectedPlan = props.retrievedInfo
     const classes = useStyles();
 
-    console.log(props.retrievedInfo)
-
     // @ts-ignore
     const [plan, setPlan] = useState<mealPlans>(selectedPlan);
     const [inputError, setInputError] = useState(false);

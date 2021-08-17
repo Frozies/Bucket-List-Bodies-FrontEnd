@@ -2,7 +2,7 @@ import AddressInput from "../../components/Admin/Orders/AddressInput";
 import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/Util/TopAppBar";
 import styles from "../../styles/Home.module.css";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "@material-ui/core";
 import MealPlanSelection from "../../components/Admin/Orders/MealPlanSelection";
 import ProductSelection from "../../components/Admin/Orders/ProductSelection";
@@ -43,15 +43,15 @@ const RETRIEVE_ALL_MEALS = gql`
 `
 
 const PUSH_ORDER = gql`
-    mutation Mutation($orderInput: OrderInput) {
-        createOrder(order: $orderInput){
+    mutation Mutation($createOrderOrder: OrderInput) {
+        createOrder(order: $createOrderOrder) {
+            total
             customer {
                 name
             }
-            
-            total
         }
     }
+
 `
 
 let order = function createOrder() {
@@ -67,32 +67,35 @@ let order = function createOrder() {
     const {loading: loadMeals, error: mealError, data: mealData} = useQuery( RETRIEVE_ALL_MEALS );
     const [createOrder, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(PUSH_ORDER);
 
-    const submitOrder = async (formData: any) => {
+    if (uploadLoading) console.log("Uploading order!")
+    if (uploadError) console.log("Uploading Error!" + uploadError)
+    if (uploadData) console.log(uploadData)
+
+    const submitOrder = async () => {
         try {
             await createOrder({
                 variables: {
-                    orderInput: {
-                        customer: {
-                            name: formData.customer.name,
-                            phone: formData.customer.phone,
-                            address: {
-                                city: formData.customer.address.city,
-                                line1: formData.customer.address.line1,
-                                line2: formData.customer.address.line2,
-                                postal: formData.customer.address.postal,
-                                state: formData.customer.address.state,
+                    "createOrderOrder": {
+                        "deliveryDate": "10",
+                        "notes": "notes",
+                        "coupon": "coupin",
+                        "meals": selectedMeals,
+                        "customer": {
+                            "name": customerInfo?.name,
+                            "phone": customerInfo?.phone,
+                            "address": {
+                                "line1": customerInfo?.address1,
+                                "line2": customerInfo?.address2,
+                                "city": customerInfo?.city,
+                                "postal": customerInfo?.postal,
+                                "state": "FL"
                             }
-                        },
-                        meals: {
-                            _id: formData.meals._id,
-                        },
-                        coupon: formData.coupon,
-                        notes: formData.notes,
+                        }
                     }
                 }
-            }).then((results)=> {
+            })/*.then((results)=> {
                 setSuccessfulOrder(true)
-            })
+            })*/
         } catch (e) {
             return e;
         }
@@ -143,13 +146,10 @@ let order = function createOrder() {
                             selectedMeals={selectedMeals}
                             onNext={() => {
                                 /*Send the meal to the db then success*/
-                                    submitOrder( {
-
-                                    }).then( r => {
+                                    submitOrder()/*.then( r => {
                                         if (r) setWizardState( wizardStates.success )
                                         else setWizardState( wizardStates.failed )
-                                    })
-
+                                    })*/
                              }}
                             onPrev={() => {
                                 setWizardState( wizardStates.mealPlan )
@@ -181,6 +181,7 @@ let order = function createOrder() {
                         </Button>
                     </div>
                 )
+
             case wizardStates.failed:
                 return (
                     <div>

@@ -147,7 +147,8 @@ export default function ProductSelection(props: any) {
                         disabled={submitDisabled}
                         variant={"contained"}
                         color={'secondary'}
-                        onClick={() => {
+                        type={"submit"}
+                        onClick={()=>{
                             props.setMeals(meals)
                             props.onNext()
                         }}

@@ -67,7 +67,6 @@ function AddressInput(props: any) {
                 <ValidatorForm
                     onSubmit={()=>{
                         props.setCustomerInfo(values)
-                        console.log(values)
                         props.onNext();
                     }}
                     onError={(errors: any) => console.log(errors)}

@@ -1,7 +1,6 @@
 import React from "react";
 
 const cartShape = (currentAmount = 5, totalAmount = 8, color) => {
-    console.log(color)
     return (
         <div>
             <p style={{
