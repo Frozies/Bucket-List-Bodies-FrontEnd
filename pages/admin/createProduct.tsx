@@ -67,9 +67,12 @@ const SINGLE_UPLOAD = gql`
 
 function createProduct() {
     const classes = useStyles();
-    const { register, handleSubmit } = useForm<IMealInput>();
-    const [createMeal, { data: mealData, loading: mealLoading, error: mealError }] = useMutation<IMealInput>(CREATE_MEAL);
 
+    //TODO: Do I need 5 hooks here?
+    //TODO: Refactoring - Can I move the file system to its own util library?
+    const { register, handleSubmit } = useForm<IMealInput>();
+
+    const [createMeal, { data: mealData, loading: mealLoading, error: mealError }] = useMutation<IMealInput>(CREATE_MEAL);
     const [mutateUpload, { loading: uploadLoading, error: uploadError, data: uploadData }] = useMutation(SINGLE_UPLOAD);
 
     const [file, setFile] = useState();
