@@ -1,14 +1,7 @@
-import TopAppBar from "../components/Admin/TopAppBar";
+import TopAppBar from "../components/Admin/Util/TopAppBar";
 import React from "react";
 import {Helmet} from "react-helmet-async";
 import styles from '../styles/Home.module.css'
-
-/*todo:
-            -   Header -- finish buttons and stuff
-            -   Mobile Styling -- css hell
-            -   Multi page routing -- express?
-            -   Footer -- app bar?
-            */
 
 export default function Home() {
     const pageTitle = "Bucket List Bodies"
@@ -20,12 +13,30 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Helmet>
 
-            <TopAppBar pageTitle={pageTitle} />
+            {/*<TopAppBar pageTitle={pageTitle} />*/}
 
-            <main className={styles.container}>
+            {/*Hero banner*/}
+            <div className={styles.hero} style={{
+                backgroundImage: 'url(/shutterstock/hero.jpg)'
+            }}>
+                <div className={styles.heroOverlay}>
+                    <h1>Bucket list bodies is coming soon!</h1>
+                    {/*TODO:
+                        Instagram: https://www.instagram.com/bucket_list_body/
+                        Email:
+                        Phone:
+                        Current Menu:
+                        Instagram Gallery:
+
+                    */}
+
+                </div>
+            </div>
+
+            {/*<main className={styles.container}>
                 <div className={styles.main}>
                 </div>
-            </main>
+            </main>*/}
 
             {/*<footer className={styles.footer}>
                 // Hello World!

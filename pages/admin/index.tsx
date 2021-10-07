@@ -1,5 +1,5 @@
 import React from 'react';
-import TopAppBar from "../../components/Admin/TopAppBar";
+import TopAppBar from "../../components/Admin/Util/TopAppBar";
 import styles from "../../styles/Home.module.css";
 import AdminHome from "../../components/Admin/AdminHome";
 import {Helmet} from "react-helmet-async";

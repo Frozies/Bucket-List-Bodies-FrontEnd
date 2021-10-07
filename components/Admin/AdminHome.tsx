@@ -46,6 +46,22 @@ class AdminHome extends Component <IProps> {
                                 </a>
                             </Button>
                         </Paper>
+
+                        <Paper elevation={2}>
+                            <Button>
+                                <a href={"/admin/createOrder"}>
+                                    Create Order
+                                </a>
+                            </Button>
+                        </Paper>
+
+                        <Paper elevation={2}>
+                            <Button>
+                                <a href={"/admin/orders"}>
+                                    View All Orders
+                                </a>
+                            </Button>
+                        </Paper>
                     </Grid>
                 </Grid>
             </Paper>
