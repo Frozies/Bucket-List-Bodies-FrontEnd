@@ -21,7 +21,7 @@ const RETRIEVE_ALL_MEALS = gql`
 `
 
 const DELETE_MEAL = gql`
-    mutation DeleteMealMutation($deleteMealMeal: MealInput) {
+    mutation DeleteMealMutation($deleteMealMeal: deleteMealInput) {
         deleteMeal(meal: $deleteMealMeal)
     }
 `

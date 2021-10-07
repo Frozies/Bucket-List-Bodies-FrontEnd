@@ -12,7 +12,7 @@ export default function Home() {
                 <meta name="description" content="Bucket list bodies is a good place to get food from!" />
                 <link rel="icon" href="/favicon.ico" />
                 <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap');
+                    @import url("https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap");
                 </style>
             </Helmet>
 
