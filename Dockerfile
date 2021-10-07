@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-EXPOSE 4000:4000/tcp
+EXPOSE 3000:3000/tcp
 
 WORKDIR /frontend
 ADD . /frontend
