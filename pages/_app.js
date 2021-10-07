@@ -10,16 +10,7 @@ import {MuiThemeProvider} from "@material-ui/core";
 import {HelmetProvider} from "react-helmet-async";
 import {createUploadLink} from "apollo-upload-client";
 
-
-//TODO: This is kind of a dumb way to use env, but we're just going to do it anyways...
-let apolloURI;
-if (process.env.NODE_ENV === "development") {
-    apolloURI = 'http://localhost:4001'
-};
-
-if (process.env.NODE_ENV === "production") {
-    apolloURI = 'https://bucketlistbodies-fw9oq.ondigitalocean.app'
-};
+let apolloURI = 'http://localhost:4001'
 
 const client = new ApolloClient({
     uri: apolloURI,
