@@ -54,8 +54,10 @@ enum AllergyEnum {
 
 const CREATE_MEAL = gql`
     #Creates a new product and price in stripe and send the information to mongodb database.
-    mutation Mutation($createMealMeal: MealInput) {
-        createMeal(meal: $createMealMeal)
+    mutation CreateMealMutation($createMealMeal: createMealInput) {
+        createMeal(meal: $createMealMeal) {
+            productID
+        }
     }
 `;
 

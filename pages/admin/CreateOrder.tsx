@@ -29,12 +29,9 @@ interface ICustomer {
 const RETRIEVE_ALL_MEALS = gql`
     query Query {
         retrieveAllMeals {
-            _id
             title
             description
             photoURL
-            price
-            sides
             carbs
             calories
             allergies
@@ -43,9 +40,8 @@ const RETRIEVE_ALL_MEALS = gql`
 `
 
 const PUSH_ORDER = gql`
-    mutation Mutation($createOrderOrder: OrderInput) {
+    mutation Mutation($createOrderOrder: createOrderInput) {
         createOrder(order: $createOrderOrder) {
-            total
             customer {
                 name
             }
