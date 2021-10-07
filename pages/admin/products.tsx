@@ -11,15 +11,11 @@ import Router from 'next/router'
 const RETRIEVE_ALL_MEALS = gql`
     query Query {
         retrieveAllMeals {
-            _id
             title
             description
             photoURL
-            price
-            sides
             carbs
             calories
-            allergies
         }
     }
 `
