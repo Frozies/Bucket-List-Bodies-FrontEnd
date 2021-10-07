@@ -67,7 +67,7 @@ const SINGLE_UPLOAD = gql`
     }
 `;
 
-function createProduct() {
+function CreateProduct() {
     const classes = useStyles();
 
     //TODO: Do I need 5 hooks here?
@@ -277,4 +277,4 @@ function createProduct() {
     )
 }
 
-export default createProduct;
+export default CreateProduct;

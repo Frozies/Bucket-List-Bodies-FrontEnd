@@ -50,7 +50,7 @@ const PUSH_ORDER = gql`
 
 `
 
-let order = function createOrder() {
+function CreateOrder() {
     //Current Order States
     let [customerInfo, setCustomerInfo] = useState<ICustomer>();
     let [selectedPlan, setSelectedPlan] = useState();
@@ -209,4 +209,4 @@ let order = function createOrder() {
         </div>
     )
 };
-export default order
+export default CreateOrder
