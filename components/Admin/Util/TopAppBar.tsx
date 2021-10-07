@@ -60,9 +60,9 @@ function TopAppBar(props: { pageTitle: String }) {
             <AppBar position="static" className={classes.root}>
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <a href={'/admin'}>
+                        {/*<a href={'/admin'}>
                             <MenuIcon/>
-                        </a>
+                        </a>*/}
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         {props.pageTitle}
