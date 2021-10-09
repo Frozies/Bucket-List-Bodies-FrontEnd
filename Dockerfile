@@ -7,6 +7,5 @@ ADD . /frontend
 
 RUN npm install
 RUN npm run build
-RUN npm run export
 
 CMD ["npm", "run", "start"]
