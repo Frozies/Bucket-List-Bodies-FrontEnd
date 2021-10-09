@@ -62,7 +62,7 @@ jobs:
 
             docker run -d \
               --restart always \
-              -p 4000:4000 \
+              -p 3000:3000 \
               --name blb-frontend \
               frozies/bucket_list_bodies_frontend:main
 
