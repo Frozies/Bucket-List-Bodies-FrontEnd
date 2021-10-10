@@ -17,17 +17,14 @@ export default function Home() {
 
             {/*Hero banner*/}
             <div className={styles.hero} style={{
-                backgroundImage: 'url(/shutterstock/hero.jpg)'
+                backgroundImage: 'url(/shutterstock/hero2.jpg)'
             }}>
                 <div className={styles.heroOverlay}>
-                    <h1>Bucket list bodies is coming soon!</h1>
+                    <h3>Bucket List Bodies</h3>
+                    <h1>Fresh handmade meals delivered to your home</h1>
+                    <button>Signup now</button>
                     {/*TODO:
                         Instagram: https://www.instagram.com/bucket_list_body/
-                        Email:
-                        Phone:
-                        Current Menu:
-                        Instagram Gallery:
-
                     */}
 
                 </div>
