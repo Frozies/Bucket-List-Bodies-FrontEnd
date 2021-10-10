@@ -1,8 +1,10 @@
 import React from "react";
 import {Helmet} from "react-helmet-async";
+import Image from "next/image";
 import styles from '../styles/Home.module.scss'
 import {Button, IconButton} from "@material-ui/core";
 import { Link } from "react-router-dom";
+
 
 export default function Home() {
     const pageTitle = "Bucket List Bodies"
@@ -53,7 +55,7 @@ export default function Home() {
                     width: '75px',
                     height: '75px'
                 }} href={'#menu'}>
-                    <img src={'/down-arrow-svgrepo-com.svg'}/>
+                    <Image src={'/down-arrow-svgrepo-com.svg'} width={'75px'} height={'75px'}/>
                 </IconButton>
             </div>
 
