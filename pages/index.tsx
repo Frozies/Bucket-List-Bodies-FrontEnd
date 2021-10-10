@@ -1,9 +1,8 @@
-import TopAppBar from "../components/Admin/Util/TopAppBar";
 import React from "react";
 import {Helmet} from "react-helmet-async";
 import styles from '../styles/Home.module.scss'
 import {Button, IconButton} from "@material-ui/core";
-import {Image} from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     const pageTitle = "Bucket List Bodies"
@@ -15,9 +14,6 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Helmet>
 
-            {/*<TopAppBar pageTitle={pageTitle} />*/}
-
-            {/*Hero banner*/}
             <div className={styles.hero} style={{
                 backgroundImage: 'url(/shutterstock/hero2.jpg)',
                 backgroundSize: 'cover',
@@ -43,13 +39,13 @@ export default function Home() {
 
                 <h1 className={styles.heroH1}>Fresh handmade meals delivered to your home</h1>
 
-                <Button style={{
-                    position: 'absolute',
-                    width: '75vw',
-                    height: '7vh',
-                    backgroundColor: '#01549d',
-                    margin: '0 25px 0 25px',
-                }} fullWidth={true} variant="contained">Signup Now</Button>
+                <Button
+                    onClick={(e: any) => {
+                        // @ts-ignore
+                        window.location = 'mailto:bucketlistbody@gmail.com';
+                        e.preventDefault();
+                    }}
+                    fullWidth={true} variant="contained">Signup Now</Button>
 
                 <IconButton style={{
                     position: 'absolute',
