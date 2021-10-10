@@ -1,7 +1,9 @@
 import TopAppBar from "../components/Admin/Util/TopAppBar";
 import React from "react";
 import {Helmet} from "react-helmet-async";
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
+import {Button, IconButton} from "@material-ui/core";
+import {Image} from "@material-ui/icons";
 
 export default function Home() {
     const pageTitle = "Bucket List Bodies"
@@ -17,23 +19,71 @@ export default function Home() {
 
             {/*Hero banner*/}
             <div className={styles.hero} style={{
-                backgroundImage: 'url(/shutterstock/hero2.jpg)'
+                backgroundImage: 'url(/shutterstock/hero2.jpg)',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
             }}>
-                <div className={styles.heroOverlay}>
-                    <h3>Bucket List Bodies</h3>
-                    <h1>Fresh handmade meals delivered to your home</h1>
-                    <button>Signup now</button>
-                    {/*TODO:
-                        Instagram: https://www.instagram.com/bucket_list_body/
-                    */}
+                <div style={{
+                    background: 'linear-gradient(\n' +
+                        '                        to top,\n' +
+                        '                    rgba(255, 131, 195, 0.8),\n' +
+                        '                    rgba(255, 255, 255, 0.5)\n' +
+                        '                    )',
+                    backgroundSize: 'cover',
+                    width: '100vw',
+                    height: '100vh',
+                    position: 'absolute',
+                    zIndex: 0,
+                    top: 0,
+                    left: 0,
+                }}>
 
                 </div>
+                <h2>Bucket List Bodies</h2>
+
+                <h1 className={styles.heroH1}>Fresh handmade meals delivered to your home</h1>
+
+                <Button style={{
+                    position: 'absolute',
+                    width: '75vw',
+                    height: '7vh',
+                    backgroundColor: '#01549d',
+                    margin: '0 25px 0 25px',
+                }} fullWidth={true} variant="contained">Signup Now</Button>
+
+                <IconButton style={{
+                    position: 'absolute',
+                    bottom: '10px',
+                    width: '75px',
+                    height: '75px'
+                }} href={'#menu'}>
+                    <img src={'/down-arrow-svgrepo-com.svg'}/>
+                </IconButton>
             </div>
 
-            {/*<main className={styles.container}>
+            <main className={styles.container} id={"menu"}>
                 <div className={styles.main}>
+                    <h1>This weeks menu</h1>
+                    <br/>
+                    <h2>Orange ginger chicken</h2>
+                    <h3>with broccoli over jasmine or cauli rice</h3>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h2>Homestyle turkey dinner</h2>
+                    <h3>with vegetables and garlic or cauli mashed</h3>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h2>Eggplant parm</h2>
+                    <h3>with jasmine rice or all veggies</h3>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h2>Skinny sloppy joe bowls</h2>
+                    <h3>with jasmine or cauli rice and grilled veggies</h3>
                 </div>
-            </main>*/}
+            </main>
 
             {/*<footer className={styles.footer}>
                 // Hello World!

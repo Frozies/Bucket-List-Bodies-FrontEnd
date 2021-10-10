@@ -1,6 +1,6 @@
 import React from 'react';
 import TopAppBar from "../../components/Admin/Util/TopAppBar";
-import styles from "../../styles/Home.module.css";
+import styles from "../../styles/Home.module.scss";
 import AdminHome from "../../components/Admin/AdminHome";
 import {Helmet} from "react-helmet-async";
 import {makeStyles} from "@material-ui/styles";
