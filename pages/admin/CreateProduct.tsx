@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import {Helmet} from "react-helmet-async";
 import TopAppBar from "../../components/Admin/Util/TopAppBar";
-import styles from "../../styles/Home.module.css";
+import styles from "../../styles/Home.module.scss";
 import {gql, useMutation} from '@apollo/client';
 import {SubmitHandler, useForm} from "react-hook-form";
 import {makeStyles} from "@material-ui/styles";
