@@ -182,5 +182,21 @@
     font-size: x-large;
   }
 }
+@media (max-height: 320px) {
+  .hero h1 {
+    font-size: 35px;
+  }
+
+  .hero h2 {
+    top: 20px;
+    font-size: 40px;
+  }
+
+  .hero button {
+    font-size: large;
+    width: 250px;
+    margin: -20px;
+  }
+}
 
 /*# sourceMappingURL=Home.module.css.map */
