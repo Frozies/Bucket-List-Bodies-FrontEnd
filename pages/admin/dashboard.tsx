@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Index(props: any) {
+function Dashboard(props: any) {
     const pageTitle = "Bucket List Bodies"
     const classes = useStyles();
 
@@ -72,4 +72,4 @@ function Index(props: any) {
     );
 }
 
-export default Index;
+export default Dashboard;

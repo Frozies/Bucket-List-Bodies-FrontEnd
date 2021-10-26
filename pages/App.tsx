@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useContext } from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import {
-    BrowserRouter as Router,
+    Router,
     Redirect,
     Route,
     Switch
@@ -24,6 +24,9 @@ const Inventory = lazy(() => import('./pages/Inventory'));
 const Account = lazy(() => import('./pages/Account'));
 const Settings = lazy(() => import('./pages/Settings'));
 const Users = lazy(() => import('./pages/Users'));*/
+
+import { createMemoryHistory } from 'history';
+const history = createMemoryHistory();
 
 const client = new ApolloClient({
     uri: process.env.REACT_APP_GRAPHQL_URI,
@@ -111,7 +114,7 @@ const AppRoutes = () => {
         <>
             <Suspense fallback={<LoadingFallback />}>
                 <Switch>
-                    {/* <AuthenticatedRoute path="/dashboard">
+                   {/* <AuthenticatedRoute path="/dashboard">
                         <Dashboard />
                     </AuthenticatedRoute>
 
@@ -143,13 +146,13 @@ function App() {
         //todo TS ignore foro apollo provider client
         // @ts-ignore
         <ApolloProvider client={client}>
-            <Router>
+            <Switch>
                 <AuthProvider>
                     <div className="bg-gray-100">
                         <AppRoutes />
                     </div>
                 </AuthProvider>
-            </Router>
+            </Switch>
         </ApolloProvider>
     );
 }
