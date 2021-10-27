@@ -1,157 +1,91 @@
-import React, { lazy, Suspense, useContext } from 'react';
-import { ApolloProvider } from '@apollo/react-hooks';
-import ApolloClient from 'apollo-boost';
-import {
-    BrowserRouter as Router,
-    Redirect,
-    Route,
-    Switch
-} from 'react-router-dom';
-import AppShell from './AppShell';
-import {
-    AuthContext,
-    AuthProvider
-} from '../components/AuthContext';
-import Home from "./landing";
-import Login from './Login';
-import Signup from './Signup';
-import Dashboard from "./admin/dashboard";
-/*import FourOFour from './pages/FourOFour';
-import Home from './pages/Home';*/
+import React from "react";
+import {Helmet} from "react-helmet-async";
+import Image from "next/image";
+import styles from '../styles/Home.module.scss'
+import {Button, IconButton} from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-/*const Dashboard = lazy(() => import('./pages/Dashboard'));
-const Inventory = lazy(() => import('./pages/Inventory'));
-const Account = lazy(() => import('./pages/Account'));
-const Settings = lazy(() => import('./pages/Settings'));
-const Users = lazy(() => import('./pages/Users'));*/
 
-const client = new ApolloClient({
-    uri: process.env.REACT_APP_GRAPHQL_URI,
-    request: operation => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            operation.setContext({
-                headers: { Authorization: `Bearer ${token}` }
-            });
-        }
-    },
-
-    //todo: possibly undefined
-    onError: ({ networkError, graphQLErrors }) => {
-        if (graphQLErrors) {
-            const unauthorizedErrors = graphQLErrors.filter(
-                // @ts-ignore
-                error => error.extensions.code === 'UNAUTHENTICATED'
-            );
-            if (unauthorizedErrors.length) {
-                // @ts-ignore
-                window.location = '/login';
-            }
-        }
-    }
-});
-
-const LoadingFallback = () => (
-    <AppShell>
-        <div className="p-4">Loading...</div>
-    </AppShell>
-);
-
-const UnauthenticatedRoutes = () => (
-    <Switch>
-        <Route path="/login">
-            <Login />
-        </Route>
-        <Route path="/signup">
-            <Signup />
-        </Route>
-        <Route exact path="/">
-            <Home />
-        </Route>
-        <Route path="*">
-            {/*<FourOFour />*/}
-        </Route>
-    </Switch>
-);
-
-const AuthenticatedRoute = (children: any, ...rest: any) => {
-    const auth = useContext(AuthContext);
+export default function Home() {
+    const pageTitle = "Bucket List Bodies"
     return (
-        <Route
-            {...rest}
-            render={() =>
-                auth.isAuthenticated() ? (
-                    <AppShell>{children}</AppShell>
-                ) : (
-                    <Redirect to="/" />
-                )
-            }
-        ></Route>
-    );
-};
+        <div>
+            <Helmet>
+                <title>{pageTitle}</title>
+                <meta name="description" content="Bucket list bodies is a good place to get food from!" />
+                <link rel="icon" href="/favicon.ico" />
+            </Helmet>
 
-const AdminRoute = (children: any, ...rest: any) => {
-    const auth = useContext(AuthContext);
-    return (
-        <Route
-            {...rest}
-            render={() =>
-                auth.isAuthenticated() && auth.isAdmin() ? (
-                    <AppShell>{children}</AppShell>
-                ) : (
-                    <Redirect to="/" />
-                )
-            }
-        ></Route>
-    );
-};
+            <div className={styles.hero} style={{
+                backgroundImage: 'url(/shutterstock/hero2.jpg)',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+            }}>
+                <div style={{
+                    background: 'linear-gradient(\n' +
+                        '                        to top,\n' +
+                        '                    rgba(255, 131, 195, 0.8),\n' +
+                        '                    rgba(255, 255, 255, 0.5)\n' +
+                        '                    )',
+                    backgroundSize: 'cover',
+                    width: '100vw',
+                    height: '100vh',
+                    position: 'absolute',
+                    zIndex: 0,
+                    top: 0,
+                    left: 0,
+                }}>
 
-const AppRoutes = () => {
-    return (
-        <>
-            <Suspense fallback={<LoadingFallback />}>
-                <Switch>
-                    {/* <AuthenticatedRoute path="/dashboard">
-                        <Dashboard />
-                    </AuthenticatedRoute>
+                </div>
+                <h2>Bucket List Bodies</h2>
 
-                    <AdminRoute path="/inventory">
-                        <Inventory />
-                    </AdminRoute>
+                <h1 className={styles.heroH1}>Fresh handmade meals delivered to your home</h1>
 
-                    <AuthenticatedRoute path="/account">
-                        <Account />
-                    </AuthenticatedRoute>
+                <Button
+                    onClick={(e: any) => {
+                        // @ts-ignore
+                        window.location = 'mailto:bucketlistbody@gmail.com';
+                        e.preventDefault();
+                    }}
+                    fullWidth={true} variant="contained">Signup Now</Button>
 
-                    <AuthenticatedRoute path="/settings">
-                        <Settings />
-                    </AuthenticatedRoute>*/}
+                <IconButton style={{
+                    position: 'absolute',
+                    bottom: '10px',
+                    width: '75px',
+                    height: '75px'
+                }} href={'#menu'}>
+                    <Image src={'/down-arrow-svgrepo-com.svg'} width={'75px'} height={'75px'}/>
+                </IconButton>
+            </div>
 
-                    <AdminRoute path="/admin">
-                        <Dashboard />
-                    </AdminRoute>
+            <main className={styles.container} id={"menu"}>
+                <div className={styles.main}>
+                    <h1>This weeks menu</h1>
+                    <br/>
+                    <h2>Orange ginger chicken</h2>
+                    <h3>with broccoli over jasmine or cauli rice</h3>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h2>Homestyle turkey dinner</h2>
+                    <h3>with vegetables and garlic or cauli mashed</h3>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h2>Eggplant parm</h2>
+                    <h3>with jasmine rice or all veggies</h3>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h2>Skinny sloppy joe bowls</h2>
+                    <h3>with jasmine or cauli rice and grilled veggies</h3>
+                </div>
+            </main>
 
-                    <UnauthenticatedRoutes />
-                </Switch>
-            </Suspense>
-        </>
-    );
-};
-
-function App() {
-    return (
-        //todo TS ignore foro apollo provider client
-        // @ts-ignore
-        <ApolloProvider client={client}>
-            <Router>
-                <AuthProvider>
-                    <div className="bg-gray-100">
-                        <AppRoutes />
-                    </div>
-                </AuthProvider>
-            </Router>
-        </ApolloProvider>
-    );
+            {/*<footer className={styles.footer}>
+                // Hello World!
+            </footer>*/}
+        </div>
+    )
 }
-
-export default App;
