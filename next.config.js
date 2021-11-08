@@ -29,6 +29,7 @@ module.exports = {
       { dev, dir, outDir, distDir, buildId }
   ) {
     return {
+      '/home': { page: 'pages/home' },
       '/': { page: '/' },
       '/admin': { page: '/admin' },
       '/admin/createProduct': { page: '/admin/createProduct' },
