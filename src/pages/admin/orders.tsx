@@ -2,12 +2,12 @@ import React from 'react';
 import {gql, useMutation, useQuery} from "@apollo/client";
 import {Button, Container, Grid, Paper} from '@material-ui/core';
 import {Helmet} from "react-helmet-async";
-import TopAppBar from "../../components/Admin/Util/TopAppBar";
-import styles from "../../styles/Home.module.scss";
-import AdminHome from "../../components/Admin/AdminHome";
+import TopAppBar from "../../../components/Admin/Util/TopAppBar";
+import styles from "../../../styles/Home.module.scss";
+import AdminHome from "../../../components/Admin/AdminHome";
 import Image from 'next/image'
 import Router from 'next/router'
-import XGridOrders from "../../components/Admin/Util/XGridOrders";
+import XGridOrders from "../../../components/Admin/Util/XGridOrders";
 
 function Products() {
     const pageTitle = "Orders"

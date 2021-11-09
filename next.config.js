@@ -3,10 +3,6 @@ const withImages = require('next-images')
 module.exports = {
   reactStrictMode: true,
 
-  env: {
-      APOLLO_URI: 'https://bucketlistbodies-fw9oq.ondigitalocean.app',
-  },
-
   webpack: (config, { webpack }) => {
     config.plugins.push(
         new webpack.IgnorePlugin({ resourceRegExp: /\/__test__\// })
@@ -29,12 +25,12 @@ module.exports = {
       { dev, dir, outDir, distDir, buildId }
   ) {
     return {
-      '/home': { page: 'pages/home' },
       '/': { page: '/' },
-      '/admin': { page: '/admin' },
-      '/admin/createProduct': { page: '/admin/createProduct' },
-      '/admin/createOrder': { page: '/admin/createOrder' },
+      '/admin': { page: '/admin/Admin' },
+      '/admin/createProduct': { page: '/admin/CreateProduct' },
+      '/admin/createOrder': { page: '/admin/CreateOrder' },
       '/admin/orders': { page: '/admin/orders' },
+      '/admin/products': { page: '/admin/products' },
     }
   },
   images: {

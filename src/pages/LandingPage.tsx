@@ -1,21 +1,16 @@
 import React from "react";
 import {Helmet} from "react-helmet-async";
 import styles from "../../styles/Home.module.scss";
-import {Button, IconButton} from "@material-ui/core";
+
 import Image from "next/image";
+import {Button, IconButton} from "@mui/material";
 
 
 interface Props {}
 
-const LandingPage: React.FC<Props> = () => {
+export const LandingPage: React.FC<Props> = () => {
   return (
       <div>
-          <Helmet>
-              <title>Bucket List Bodies</title>
-              <meta name="description" content="Bucket list bodies is a good place to get food from!" />
-              <link rel="icon" href="/favicon.ico" />
-          </Helmet>
-
           <div className={styles.hero} style={{
               backgroundImage: 'url(/shutterstock/hero2.jpg)',
               backgroundSize: 'cover',

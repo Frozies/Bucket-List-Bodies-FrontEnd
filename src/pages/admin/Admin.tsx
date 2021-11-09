@@ -1,11 +1,14 @@
 import React from 'react';
-import TopAppBar from "../../components/Admin/Util/TopAppBar";
-import styles from "../../styles/Home.module.scss";
-import AdminHome from "../../components/Admin/AdminHome";
+import TopAppBar from "../../../components/Admin/Util/TopAppBar";
+import styles from "../../../styles/Home.module.scss";
+import AdminHome from "../../../components/Admin/AdminHome";
 import {Helmet} from "react-helmet-async";
-import {makeStyles} from "@material-ui/styles";
+import {Theme} from "@mui/material";
+import {createStyles, makeStyles} from "@mui/styles";
 
-const useStyles = makeStyles((theme) => ({
+const mainTheme = require('../../theme')
+
+const useStyles = makeStyles((mainTheme: Theme) => createStyles({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -45,18 +48,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Index(props: any) {
+export default function Admin(props: any) {
     const pageTitle = "Bucket List Bodies"
+    // @ts-ignore
     const classes = useStyles();
 
     return (
         <div>
-            <Helmet>
-                <title>{pageTitle}</title>
-                <meta name="description" content="Bucket list bodies is a good place to get food from!" />
-                <link rel="icon" href="/favicon.ico" />
-            </Helmet>
-
             <TopAppBar pageTitle={pageTitle} />
 
             <main className={styles.container}>
@@ -71,5 +69,3 @@ function Index(props: any) {
         </div>
     );
 }
-
-export default Index;

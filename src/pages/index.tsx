@@ -1,17 +1,41 @@
 import React from "react";
-import LandingPage from "./LandingPage";
+import {LandingPage} from "./LandingPage";
+
+import {Link} from "@mui/material";
 
 interface Props {}
 
-class Index extends React.Component {
+const landing = process.env.LANDING_PAGE_ENABLED;
+const authenticated = true;
+
+export default class Index extends React.Component {
+
     render() {
-        if (true) return ({LandingPage})
+        if(landing) return (
+            <LandingPage/>
+        )
+
+        if(!authenticated) return (
+            <div>
+                <button>Login</button>
+            </div>
+        )
+
+        if(authenticated) return (
+           <div>
+               hello
+               <Link href={'/admin'}>
+                   <button>
+                       Admin
+                   </button>
+               </Link>
+           </div>
+        )
 
         return (
             <div>
-                No landing
+                fail
             </div>
-        );
+        )
     }
-}
-export default Index
+};

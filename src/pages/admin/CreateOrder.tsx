@@ -1,11 +1,11 @@
-import AddressInput from "../../components/Admin/Orders/AddressInput";
+import AddressInput from "../../../components/Admin/Orders/AddressInput";
 import {Helmet} from "react-helmet-async";
-import TopAppBar from "../../components/Admin/Util/TopAppBar";
-import styles from "../../styles/Home.module.scss";
+import TopAppBar from "../../../components/Admin/Util/TopAppBar";
+import styles from "../../../styles/Home.module.scss";
 import React, {useEffect, useState} from "react";
 import {Button} from "@material-ui/core";
-import MealPlanSelection from "../../components/Admin/Orders/MealPlanSelection";
-import ProductSelection from "../../components/Admin/Orders/ProductSelection";
+import MealPlanSelection from "../../../components/Admin/Orders/MealPlanSelection";
+import ProductSelection from "../../../components/Admin/Orders/ProductSelection";
 import {gql, useMutation, useQuery} from "@apollo/client";
 
 enum wizardStates {

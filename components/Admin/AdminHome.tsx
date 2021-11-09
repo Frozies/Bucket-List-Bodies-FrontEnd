@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Grid, Paper} from "@material-ui/core";
+import {Button, Grid, Paper} from "@mui/material";
+
 
 const orderInfo = (colors: string, amount: number, text: string, className: string) => {
     return(

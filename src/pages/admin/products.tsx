@@ -2,9 +2,9 @@ import React from 'react';
 import {gql, useMutation, useQuery} from "@apollo/client";
 import {Button, Container, Grid, Paper} from '@material-ui/core';
 import {Helmet} from "react-helmet-async";
-import TopAppBar from "../../components/Admin/Util/TopAppBar";
-import styles from "../../styles/Home.module.scss";
-import AdminHome from "../../components/Admin/AdminHome";
+import TopAppBar from "../../../components/Admin/Util/TopAppBar";
+import styles from "../../../styles/Home.module.scss";
+import AdminHome from "../../../components/Admin/AdminHome";
 import Image from 'next/image'
 import Router from 'next/router'
 
@@ -26,7 +26,7 @@ const DELETE_MEAL = gql`
     }
 `
 
-function Products() {
+export default function Products(props: any) {
     const {loading: loadMeals, error: mealError, data: mealData} = useQuery(RETRIEVE_ALL_MEALS);
     const [mutateDeleteMeal, {loading: loadingDeleteMeal, error: deleteError, data: deleteData}] = useMutation(DELETE_MEAL);
 
@@ -99,6 +99,4 @@ function Products() {
         </footer>*/}
         </div>
     )
-}
-
-export default Products;
+};

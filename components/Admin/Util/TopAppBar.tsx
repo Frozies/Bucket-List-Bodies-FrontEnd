@@ -1,32 +1,32 @@
-import {MDCTopAppBar} from '@material/top-app-bar';
+
 
 import React, {useEffect, useState} from 'react';
-import {AppBar, Button, createStyles, IconButton, Theme, Toolbar, Typography, useMediaQuery} from "@material-ui/core";
-import {SystemsStatus} from "./SystemsStatus";
-import {makeStyles} from "@material-ui/styles";
-import MenuIcon from '@material-ui/icons/Menu';
-import theme from "../../../src/theme";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            flexGrow: 1,
-            background: theme.palette.primary.dark,
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        title: {
-            flexGrow: 1,
-            flexWrap: "wrap",
-        },
-    }),
-);
+import {SystemsStatus} from "./SystemsStatus";
+
+import mainTheme from "../../../src/theme";
+import {AppBar, Button, IconButton, Theme, Toolbar, Typography, useMediaQuery} from "@mui/material";
+import { makeStyles } from '@mui/styles'
+
+const useStyles = makeStyles({
+
+    root: {
+        flexGrow: 1,
+        background:mainTheme.palette.primary.dark,
+    },
+    menuButton: {
+        marginRight: mainTheme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
+        flexWrap: "wrap",
+    }
+});
 
 
 function TopAppBar(props: { pageTitle: String }) {
     const [systemState, setSystemState] = useState('UNKNOWN');
-    const matches = useMediaQuery(theme.breakpoints.up('sm'));
+    const matches = useMediaQuery(mainTheme.breakpoints.up('sm'));
 
     let handleSystemState = () => {
         setSystemState('OKAY')
